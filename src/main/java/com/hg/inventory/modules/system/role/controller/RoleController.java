@@ -2,10 +2,8 @@ package com.hg.inventory.modules.system.role.controller;
 
 import com.hg.inventory.common.domain.vo.PageInfo;
 import com.hg.inventory.common.domain.vo.Result;
-import com.hg.inventory.modules.system.employee.domain.entity.Employee;
-import com.hg.inventory.modules.system.employee.domain.form.EmployeeForm;
 import com.hg.inventory.modules.system.role.domain.entity.Role;
-import com.hg.inventory.modules.system.role.domain.entity.form.RoleForm;
+import com.hg.inventory.modules.system.role.domain.form.RoleForm;
 import com.hg.inventory.modules.system.role.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

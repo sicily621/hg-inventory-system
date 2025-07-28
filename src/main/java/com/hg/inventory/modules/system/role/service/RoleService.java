@@ -2,7 +2,7 @@ package com.hg.inventory.modules.system.role.service;
 
 import com.hg.inventory.common.domain.vo.PageInfo;
 import com.hg.inventory.modules.system.role.domain.entity.Role;
-import com.hg.inventory.modules.system.role.domain.entity.form.RoleForm;
+import com.hg.inventory.modules.system.role.domain.form.RoleForm;
 
 import java.util.List;
 
