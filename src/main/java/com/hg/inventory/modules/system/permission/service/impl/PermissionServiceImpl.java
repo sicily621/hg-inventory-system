@@ -9,9 +9,6 @@ import com.hg.inventory.modules.system.permission.domain.entity.Permission;
 import com.hg.inventory.modules.system.permission.domain.form.PermissionForm;
 import com.hg.inventory.modules.system.permission.mapper.PermissionMapper;
 import com.hg.inventory.modules.system.permission.service.PermissionService;
-import com.hg.inventory.modules.system.role.domain.entity.Role;
-import com.hg.inventory.modules.system.role.domain.entity.form.RoleForm;
-import com.hg.inventory.modules.system.role.mapper.RoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
