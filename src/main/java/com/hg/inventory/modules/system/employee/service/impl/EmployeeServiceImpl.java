@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hg.inventory.common.domain.vo.PageInfo;
 import com.hg.inventory.common.enums.DelFlagEnum;
+import com.hg.inventory.modules.base.customer.domain.entity.Customer;
 import com.hg.inventory.modules.system.employee.domain.entity.Employee;
 import com.hg.inventory.modules.system.employee.domain.form.EmployeeForm;
 import com.hg.inventory.modules.system.employee.mapper.EmployeeMapper;
@@ -36,6 +37,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee getById(Long id) {
         return employeeMapper.selectById(id);
     }
+    @Override
+    public Employee getByUsername(String username) {
+        LambdaQueryWrapper<Employee> lqw = Wrappers.lambdaQuery();
+        lqw.eq(Employee::getDelFlag, DelFlagEnum.NORMAL.getValue());
+        lqw.eq(Employee::getUsername, username);
+        return employeeMapper.selectOne(lqw);
+    }
 
     @Override
     public boolean deleteById(Long id) {
@@ -56,5 +64,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         PageInfo<Employee> tableDataInfo = PageInfo.build(result);
         return tableDataInfo;
     }
+
+
 
 }

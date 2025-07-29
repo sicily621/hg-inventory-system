@@ -5,7 +5,6 @@ import com.hg.inventory.common.domain.vo.Result;
 import com.hg.inventory.modules.base.customer.domain.entity.Customer;
 import com.hg.inventory.modules.base.customer.domain.form.CustomerForm;
 import com.hg.inventory.modules.base.customer.service.CustomerService;
-import com.hg.inventory.modules.base.product.domain.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;

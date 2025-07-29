@@ -12,4 +12,6 @@ public interface EmployeeService {
     boolean deleteById(Long id);
 
     PageInfo<Employee> page(EmployeeForm employeeForm);
+
+    Employee getByUsername(String username);
 }

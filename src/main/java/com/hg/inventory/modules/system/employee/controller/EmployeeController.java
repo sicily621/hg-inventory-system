@@ -46,6 +46,13 @@ public class EmployeeController {
         return Result.success(employeeService.getById(id));
     }
     /**
+     * 根据员工Id查询员工
+     */
+    @GetMapping("{username}")
+    public Result<Employee> getByUsername(@PathVariable("id") String username){
+        return Result.success(employeeService.getByUsername(username));
+    }
+    /**
      * 删除员工
      */
     @DeleteMapping("{id}")
