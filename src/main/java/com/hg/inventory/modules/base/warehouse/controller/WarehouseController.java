@@ -33,7 +33,7 @@ public class WarehouseController {
     }
     /**
      * 修改仓库
-     * @param role
+     * @param warehouse
      * @return
      */
     @PutMapping()
