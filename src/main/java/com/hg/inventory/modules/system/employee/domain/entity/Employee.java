@@ -22,7 +22,4 @@ public class Employee extends BaseEntity {
     private String phone;
     private String email;
     private Integer status;
-    private Date createTime;
-    private Date updateTime;
-    private Integer delFlag;
 }
