@@ -13,4 +13,6 @@ public class Permission extends BaseEntity {
     private Long parentId;
     private String url;
     private String description;
+    private Integer action;
+    private Integer type;
 }
