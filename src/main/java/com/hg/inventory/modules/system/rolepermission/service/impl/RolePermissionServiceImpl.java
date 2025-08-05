@@ -39,4 +39,20 @@ public class RolePermissionServiceImpl implements RolePermissionService {
         rolePermissionMapper.delete(lqw);
     }
 
+    @Override
+    public List<RolePermission> getByRoleId(Long roleId) {
+        LambdaQueryWrapper<RolePermission> lqw = Wrappers.lambdaQuery();
+        lqw.eq(RolePermission::getDelFlag, DelFlagEnum.NORMAL.getValue());
+        lqw.eq(RolePermission::getRoleId, roleId);
+        return rolePermissionMapper.selectList(lqw);
+    }
+
+    @Override
+    public void deleteByRoleId(Long roleId) {
+        LambdaQueryWrapper<RolePermission> lqw = Wrappers.lambdaQuery();
+        lqw.eq(RolePermission::getDelFlag, DelFlagEnum.NORMAL.getValue());
+        lqw.eq(RolePermission::getRoleId, roleId);
+        rolePermissionMapper.delete(lqw);
+    }
+
 }

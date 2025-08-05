@@ -27,18 +27,18 @@ public class RolePermissionController {
         return Result.success();
     }
     /**
-     * 根据权限Id查询角色权限关系
+     * 根据角色Id查询角色权限关系
      */
-    @GetMapping("{permissionId}")
-    public Result<List<RolePermission>> getById(@PathVariable("permissionId") Long permissionId){
-        return Result.success(rolePermissionService.getByPermissionId(permissionId));
+    @GetMapping("{roleId}")
+    public Result<List<RolePermission>> getByRoleId(@PathVariable("roleId") Long roleId){
+        return Result.success(rolePermissionService.getByRoleId(roleId));
     }
     /**
-     * 批量删除角色权限关系
+     * 根据角色ID批量删除角色权限关系
      */
-    @DeleteMapping("{permissionId}")
-    public Result<Void> deleteById(@PathVariable("permissionId") Long permissionId){
-        rolePermissionService.deleteByPermissionId(permissionId);
+    @DeleteMapping("{roleId}")
+    public Result<Void> deleteByRoleId(@PathVariable("roleId") Long roleId){
+        rolePermissionService.deleteByRoleId(roleId);
         return Result.success();
     }
 }

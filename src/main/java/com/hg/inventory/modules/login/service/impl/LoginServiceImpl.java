@@ -20,6 +20,10 @@ public class LoginServiceImpl implements LoginService {
         LoginResponse loginResponse = new LoginResponse();
         if(employee!=null){
             if(employee.getPassword().equals(password)){
+                loginResponse.setId(employee.getId());
+                loginResponse.setRoleId(employee.getRoleId());
+                loginResponse.setDepartmentId(employee.getDepartmentId());
+                loginResponse.setUsername(employee.getUsername());
                 loginResponse.setToken("123456");
                 loginResponse.setMsg("登录成功");
             }else{
