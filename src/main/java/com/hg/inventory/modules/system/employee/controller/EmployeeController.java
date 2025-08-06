@@ -3,11 +3,14 @@ package com.hg.inventory.modules.system.employee.controller;
 import com.hg.inventory.common.domain.form.PageQuery;
 import com.hg.inventory.common.domain.vo.PageInfo;
 import com.hg.inventory.common.domain.vo.Result;
+import com.hg.inventory.modules.system.department.domain.entity.Department;
 import com.hg.inventory.modules.system.employee.domain.entity.Employee;
 import com.hg.inventory.modules.system.employee.domain.form.EmployeeForm;
 import com.hg.inventory.modules.system.employee.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 /**
@@ -67,4 +70,12 @@ public class EmployeeController {
     public Result<PageInfo<Employee>> page(EmployeeForm employeeForm){
         return Result.success(employeeService.page(employeeForm));
     }
+    /**
+     * 查询员工列表
+     */
+    @GetMapping("/list")
+    public Result<List<Employee>> list(){
+        return Result.success(employeeService.list());
+    }
+
 }

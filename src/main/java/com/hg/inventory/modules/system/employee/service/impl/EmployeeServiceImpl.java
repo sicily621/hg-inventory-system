@@ -6,12 +6,15 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hg.inventory.common.domain.vo.PageInfo;
 import com.hg.inventory.common.enums.DelFlagEnum;
 import com.hg.inventory.modules.base.customer.domain.entity.Customer;
+import com.hg.inventory.modules.system.department.domain.entity.Department;
 import com.hg.inventory.modules.system.employee.domain.entity.Employee;
 import com.hg.inventory.modules.system.employee.domain.form.EmployeeForm;
 import com.hg.inventory.modules.system.employee.mapper.EmployeeMapper;
 import com.hg.inventory.modules.system.employee.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -43,6 +46,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         lqw.eq(Employee::getDelFlag, DelFlagEnum.NORMAL.getValue());
         lqw.eq(Employee::getUsername, username);
         return employeeMapper.selectOne(lqw);
+    }
+
+    @Override
+    public List<Employee> list() {
+        LambdaQueryWrapper<Employee> lqw = Wrappers.lambdaQuery();
+        lqw.eq( Employee::getDelFlag, DelFlagEnum.NORMAL.getValue());
+        return employeeMapper.selectList(lqw);
     }
 
     @Override

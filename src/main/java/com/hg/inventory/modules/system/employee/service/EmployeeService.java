@@ -4,6 +4,8 @@ import com.hg.inventory.common.domain.vo.PageInfo;
 import com.hg.inventory.modules.system.employee.domain.entity.Employee;
 import com.hg.inventory.modules.system.employee.domain.form.EmployeeForm;
 
+import java.util.List;
+
 public interface EmployeeService {
     Employee save(Employee employee);
 
@@ -14,4 +16,6 @@ public interface EmployeeService {
     PageInfo<Employee> page(EmployeeForm employeeForm);
 
     Employee getByUsername(String username);
+
+    List<Employee> list();
 }
