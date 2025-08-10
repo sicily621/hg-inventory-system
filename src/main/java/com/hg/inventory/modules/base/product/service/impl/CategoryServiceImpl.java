@@ -1,7 +1,10 @@
 package com.hg.inventory.modules.base.product.service.impl;
 
+import cn.hutool.core.collection.CollStreamUtil;
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.google.common.collect.Lists;
 import com.hg.inventory.common.enums.DelFlagEnum;
 import com.hg.inventory.modules.base.product.domain.entity.Category;
 import com.hg.inventory.modules.base.product.mapper.CategoryMapper;
@@ -10,7 +13,9 @@ import com.hg.inventory.modules.system.department.domain.entity.Department;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -56,5 +61,42 @@ public class CategoryServiceImpl implements CategoryService {
         LambdaQueryWrapper<Category> lqw = Wrappers.lambdaQuery();
         lqw.eq( Category::getDelFlag, DelFlagEnum.NORMAL.getValue());
         return categoryMapper.selectList(lqw);
+    }
+
+    @Override
+    public List<Long> findAllChild(Long categoryId,boolean includeSelf) {
+        if(categoryId == null){
+            return Lists.newArrayList();
+        }
+        LambdaQueryWrapper<Category> lqw = Wrappers.lambdaQuery();
+        lqw.eq( Category::getDelFlag, DelFlagEnum.NORMAL.getValue());
+        List<Category> categories = categoryMapper.selectList(lqw);
+
+        Map<Long, List<Category>> parentIdListMap = CollStreamUtil.groupByKey(categories, Category::getParentId);
+        List<Long> parentIds = Lists.newArrayList(categoryId);
+        List<Long> childList = findChildList(parentIds, parentIdListMap);
+        if(includeSelf){
+            List<Long> oldChildList = childList;
+            childList = Lists.newArrayList(categoryId);
+            childList.addAll(oldChildList);
+        }
+        return childList;
+    }
+
+    private List<Long> findChildList(List<Long> parentIds, Map<Long, List<Category>> parentIdListMap) {
+
+        List<Long> res = Lists.newArrayList();
+        for (Long parentId : parentIds) {
+
+            List<Category> categories = parentIdListMap.get(parentId);
+            if(CollUtil.isEmpty(categories)){
+                continue;
+            }
+            List<Long> ids = CollStreamUtil.toList(categories, Category::getId);
+            res.addAll(ids);
+            List<Long> childList = findChildList(ids, parentIdListMap);
+            res.addAll(childList);
+        }
+        return res;
     }
 }

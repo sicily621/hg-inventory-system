@@ -3,10 +3,9 @@ package com.hg.inventory.modules.system.employee.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.hg.inventory.common.domain.form.PageQuery;
 import com.hg.inventory.common.domain.vo.PageInfo;
 import com.hg.inventory.common.enums.DelFlagEnum;
-import com.hg.inventory.modules.base.customer.domain.entity.Customer;
-import com.hg.inventory.modules.system.department.domain.entity.Department;
 import com.hg.inventory.modules.system.employee.domain.entity.Employee;
 import com.hg.inventory.modules.system.employee.domain.form.EmployeeForm;
 import com.hg.inventory.modules.system.employee.mapper.EmployeeMapper;
@@ -49,9 +48,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<Employee> list() {
-        LambdaQueryWrapper<Employee> lqw = Wrappers.lambdaQuery();
-        lqw.eq( Employee::getDelFlag, DelFlagEnum.NORMAL.getValue());
+    public List<Employee> list(EmployeeForm employeeForm) {
+        LambdaQueryWrapper<Employee> lqw = getEmployeeLambdaQueryWrapper(employeeForm);
         return employeeMapper.selectList(lqw);
     }
 
@@ -62,19 +60,23 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public PageInfo<Employee> page(EmployeeForm employeeForm) {
+    public PageInfo<Employee> page(EmployeeForm employeeForm, PageQuery pageQuery) {
+        LambdaQueryWrapper<Employee> lqw = getEmployeeLambdaQueryWrapper(employeeForm);
+        Page<Employee> page = pageQuery.build();
+        Page<Employee> result = employeeMapper.selectPage(page, lqw);
+        PageInfo<Employee> tableDataInfo = PageInfo.build(result);
+        return tableDataInfo;
+    }
+
+    private static LambdaQueryWrapper<Employee> getEmployeeLambdaQueryWrapper(EmployeeForm employeeForm) {
         LambdaQueryWrapper<Employee> lqw = Wrappers.lambdaQuery();
         lqw.like(employeeForm.getCode()!=null, Employee::getCode, employeeForm.getCode());
         lqw.like(employeeForm.getRealName()!=null, Employee::getRealName, employeeForm.getRealName());
         lqw.eq(employeeForm.getDepartmentId()!=null, Employee::getDepartmentId, employeeForm.getDepartmentId());
         lqw.eq(employeeForm.getRoleId()!=null, Employee::getRoleId, employeeForm.getRoleId());
         lqw.eq( Employee::getDelFlag, DelFlagEnum.NORMAL.getValue());
-        Page<Employee> page = employeeForm.build();
-        Page<Employee> result = employeeMapper.selectPage(page, lqw);
-        PageInfo<Employee> tableDataInfo = PageInfo.build(result);
-        return tableDataInfo;
+        return lqw;
     }
-
 
 
 }

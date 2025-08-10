@@ -1,5 +1,6 @@
 package com.hg.inventory.modules.system.employee.service;
 
+import com.hg.inventory.common.domain.form.PageQuery;
 import com.hg.inventory.common.domain.vo.PageInfo;
 import com.hg.inventory.modules.system.employee.domain.entity.Employee;
 import com.hg.inventory.modules.system.employee.domain.form.EmployeeForm;
@@ -13,9 +14,9 @@ public interface EmployeeService {
 
     boolean deleteById(Long id);
 
-    PageInfo<Employee> page(EmployeeForm employeeForm);
+    PageInfo<Employee> page(EmployeeForm employeeForm, PageQuery pageQuery);
 
     Employee getByUsername(String username);
 
-    List<Employee> list();
+    List<Employee> list(EmployeeForm employeeForm);
 }

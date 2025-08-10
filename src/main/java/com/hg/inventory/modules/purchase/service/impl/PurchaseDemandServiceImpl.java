@@ -47,9 +47,11 @@ public class PurchaseDemandServiceImpl implements PurchaseDemandService {
     @Override
     public PageInfo<PurchaseDemand> page(PurchaseDemandForm purchaseDemandForm) {
         LambdaQueryWrapper<PurchaseDemand> lqw = Wrappers.lambdaQuery();
+        lqw.ge(purchaseDemandForm.getStartTime()!=null, PurchaseDemand::getCreateTime, purchaseDemandForm.getStartTime());
+        lqw.le(purchaseDemandForm.getEndTime()!=null, PurchaseDemand::getCreateTime, purchaseDemandForm.getEndTime());
         lqw.eq(purchaseDemandForm.getDepartmentId()!=null, PurchaseDemand::getDepartmentId, purchaseDemandForm.getDepartmentId());
+        lqw.eq(purchaseDemandForm.getApplicantId()!=null, PurchaseDemand::getApplicantId, purchaseDemandForm.getApplicantId());
         lqw.eq(purchaseDemandForm.getStatus()!=null, PurchaseDemand::getStatus, purchaseDemandForm.getStatus());
-        lqw.eq(purchaseDemandForm.getApplyDate()!=null, PurchaseDemand::getApplyDate, purchaseDemandForm.getApplyDate());
         lqw.eq(PurchaseDemand::getDelFlag, DelFlagEnum.NORMAL.getValue());
         Page<PurchaseDemand> page = purchaseDemandForm.build();
         Page<PurchaseDemand> result = purchaseDemandMapper.selectPage(page, lqw);

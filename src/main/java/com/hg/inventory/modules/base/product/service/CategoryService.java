@@ -14,4 +14,7 @@ public interface CategoryService {
     Boolean deleteById(Long id);
 
     List<Category> list();
+
+    List<Long> findAllChild(Long categoryId, boolean includeSelf);
+
 }

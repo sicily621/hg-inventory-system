@@ -4,7 +4,7 @@ import com.hg.inventory.common.domain.form.PageQuery;
 import lombok.Data;
 
 @Data
-public class EmployeeForm extends PageQuery {
+public class EmployeeForm {
     private String code;
     private String realName;
     private Long departmentId;

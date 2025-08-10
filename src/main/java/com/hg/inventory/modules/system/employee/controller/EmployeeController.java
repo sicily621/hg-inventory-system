@@ -67,15 +67,15 @@ public class EmployeeController {
      * 分页查询员工列表
      */
     @GetMapping("/page")
-    public Result<PageInfo<Employee>> page(EmployeeForm employeeForm){
-        return Result.success(employeeService.page(employeeForm));
+    public Result<PageInfo<Employee>> page(EmployeeForm employeeForm,PageQuery pageQuery){
+        return Result.success(employeeService.page(employeeForm,pageQuery));
     }
     /**
      * 查询员工列表
      */
     @GetMapping("/list")
-    public Result<List<Employee>> list(){
-        return Result.success(employeeService.list());
+    public Result<List<Employee>> list(EmployeeForm employeeForm){
+        return Result.success(employeeService.list(employeeForm));
     }
 
 }

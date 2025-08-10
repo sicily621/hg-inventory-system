@@ -1,5 +1,6 @@
 package com.hg.inventory.modules.base.product.service;
 
+import com.hg.inventory.common.domain.form.PageQuery;
 import com.hg.inventory.common.domain.vo.PageInfo;
 import com.hg.inventory.modules.base.product.domain.entity.Product;
 import com.hg.inventory.modules.base.product.domain.form.ProductForm;
@@ -16,7 +17,7 @@ public interface ProductService {
 
     Boolean deleteById(Long id);
 
-    List<Product> list();
+    List<Product> list(ProductForm productForm);
 
-    PageInfo<Product> page(ProductForm productForm);
+    PageInfo<Product> page(ProductForm productForm, PageQuery pageQuery);
 }

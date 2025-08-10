@@ -1,4 +1,5 @@
 package com.hg.inventory.modules.base.product.controller;
+import com.hg.inventory.common.domain.form.PageQuery;
 import com.hg.inventory.common.domain.vo.PageInfo;
 import com.hg.inventory.common.domain.vo.Result;
 import com.hg.inventory.modules.base.product.domain.entity.Product;
@@ -64,16 +65,16 @@ public class ProductController {
      * 查询商品列表
      */
     @GetMapping("/list")
-    public Result<List<Product>> list(){
-        return Result.success(productService.list());
+    public Result<List<Product>> list(ProductForm productForm){
+        return Result.success(productService.list(productForm));
     }
 
     /**
      * 分页查询商品列表
      */
     @GetMapping("/page")
-    public Result<PageInfo<Product>> page(ProductForm productForm){
-        return Result.success(productService.page(productForm));
+    public Result<PageInfo<Product>> page(ProductForm productForm, PageQuery pageQuery){
+        return Result.success(productService.page(productForm, pageQuery));
     }
 
 }
