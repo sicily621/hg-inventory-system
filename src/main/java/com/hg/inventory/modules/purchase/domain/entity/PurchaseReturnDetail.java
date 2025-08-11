@@ -10,7 +10,8 @@ import java.math.BigDecimal;
 @TableName("hg_purchase_return_detail")
 public class PurchaseReturnDetail extends BaseEntity {
     private Long id;
-    private Long detailId;
+    private Long returnId;
+    private Long categoryId;
     private Long productId;
     private BigDecimal quantity;
     private BigDecimal price;

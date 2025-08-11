@@ -25,7 +25,7 @@ public class PurchaseReturnDetailServiceImpl implements PurchaseReturnDetailServ
     public List<PurchaseReturnDetail> getByReturnId(Long returnId) {
         LambdaQueryWrapper<PurchaseReturnDetail> lqw = Wrappers.lambdaQuery();
         lqw.eq(PurchaseReturnDetail::getDelFlag, DelFlagEnum.NORMAL.getValue());
-        lqw.eq(PurchaseReturnDetail::getId, returnId);
+        lqw.eq(PurchaseReturnDetail::getReturnId, returnId);
         return purchaseReturnDetailMapper.selectList(lqw);
     }
 
@@ -33,7 +33,7 @@ public class PurchaseReturnDetailServiceImpl implements PurchaseReturnDetailServ
     public void deleteByReturnId(Long returnId) {
         LambdaQueryWrapper<PurchaseReturnDetail> lqw = Wrappers.lambdaQuery();
         lqw.eq(PurchaseReturnDetail::getDelFlag, DelFlagEnum.NORMAL.getValue());
-        lqw.eq(PurchaseReturnDetail::getId, returnId);
+        lqw.eq(PurchaseReturnDetail::getReturnId, returnId);
         purchaseReturnDetailMapper.delete(lqw);
     }
 }
