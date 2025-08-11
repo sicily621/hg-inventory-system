@@ -9,11 +9,11 @@ import java.math.BigDecimal;
 @Data
 @TableName("hg_purchase_order_detail")
 public class PurchaseOrderDetail extends BaseEntity {
-    private Long detailId;
+    private Long id;
     private Long orderId;
+    private Long categoryId;
     private Long productId;
     private BigDecimal quantity;
     private BigDecimal price;
     private BigDecimal amount;
-    private String remark;
 }

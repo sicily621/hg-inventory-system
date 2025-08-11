@@ -3,7 +3,6 @@ package com.hg.inventory.modules.purchase.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.hg.inventory.common.enums.DelFlagEnum;
-import com.hg.inventory.modules.purchase.domain.entity.PurchaseOrderDetail;
 import com.hg.inventory.modules.purchase.domain.entity.PurchaseReturnDetail;
 import com.hg.inventory.modules.purchase.mapper.PurchaseReturnDetailMapper;
 import com.hg.inventory.modules.purchase.service.PurchaseReturnDetailService;
@@ -26,7 +25,7 @@ public class PurchaseReturnDetailServiceImpl implements PurchaseReturnDetailServ
     public List<PurchaseReturnDetail> getByReturnId(Long returnId) {
         LambdaQueryWrapper<PurchaseReturnDetail> lqw = Wrappers.lambdaQuery();
         lqw.eq(PurchaseReturnDetail::getDelFlag, DelFlagEnum.NORMAL.getValue());
-        lqw.eq(PurchaseReturnDetail::getReturnId, returnId);
+        lqw.eq(PurchaseReturnDetail::getId, returnId);
         return purchaseReturnDetailMapper.selectList(lqw);
     }
 
@@ -34,7 +33,7 @@ public class PurchaseReturnDetailServiceImpl implements PurchaseReturnDetailServ
     public void deleteByReturnId(Long returnId) {
         LambdaQueryWrapper<PurchaseReturnDetail> lqw = Wrappers.lambdaQuery();
         lqw.eq(PurchaseReturnDetail::getDelFlag, DelFlagEnum.NORMAL.getValue());
-        lqw.eq(PurchaseReturnDetail::getReturnId, returnId);
+        lqw.eq(PurchaseReturnDetail::getId, returnId);
         purchaseReturnDetailMapper.delete(lqw);
     }
 }

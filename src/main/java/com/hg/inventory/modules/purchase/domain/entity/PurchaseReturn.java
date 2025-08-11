@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.hg.inventory.common.domain.entity.BaseEntity;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
@@ -13,8 +14,10 @@ public class PurchaseReturn extends BaseEntity {
     private String code;
     private Long orderId;
     private Long employeeId;
-    private Date time;
     private Integer status;
     private Long supplierId;
-    private String remark;
+    private String description;
+    private BigDecimal totalAmount;
+    private Long approverId;
+    private Date approvalTime;
 }

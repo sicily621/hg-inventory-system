@@ -1,5 +1,6 @@
 package com.hg.inventory.modules.purchase.service;
 
+import com.hg.inventory.common.domain.form.PageQuery;
 import com.hg.inventory.common.domain.vo.PageInfo;
 import com.hg.inventory.modules.purchase.domain.entity.PurchaseOrder;
 import com.hg.inventory.modules.purchase.domain.form.PurchaseOrderForm;
@@ -13,7 +14,7 @@ public interface PurchaseOrderService {
 
     boolean deleteById(Long id);
 
-    PageInfo<PurchaseOrder> page(PurchaseOrderForm purchaseOrderForm);
+    PageInfo<PurchaseOrder> page(PurchaseOrderForm purchaseOrderForm, PageQuery pageQuery);
 
-    List<PurchaseOrder> list();
+    List<PurchaseOrder> list(PurchaseOrderForm purchaseOrderForm);
 }

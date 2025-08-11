@@ -3,6 +3,7 @@ package com.hg.inventory.modules.purchase.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.hg.inventory.common.domain.form.PageQuery;
 import com.hg.inventory.common.domain.vo.PageInfo;
 import com.hg.inventory.common.enums.DelFlagEnum;
 import com.hg.inventory.modules.purchase.domain.entity.PurchaseOrder;
@@ -45,25 +46,30 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
     }
 
     @Override
-    public PageInfo<PurchaseOrder> page(PurchaseOrderForm purchaseOrderForm) {
+    public PageInfo<PurchaseOrder> page(PurchaseOrderForm purchaseOrderForm, PageQuery pageQuery) {
+        LambdaQueryWrapper<PurchaseOrder> lqw = getPurchaseOrderLambdaQueryWrapper(purchaseOrderForm);
+        Page<PurchaseOrder> page = pageQuery.build();
+        Page<PurchaseOrder> result = purchaseOrderMapper.selectPage(page, lqw);
+        PageInfo<PurchaseOrder> tableDataInfo = PageInfo.build(result);
+        return tableDataInfo;
+    }
+
+    private static LambdaQueryWrapper<PurchaseOrder> getPurchaseOrderLambdaQueryWrapper(PurchaseOrderForm purchaseOrderForm) {
         LambdaQueryWrapper<PurchaseOrder> lqw = Wrappers.lambdaQuery();
         lqw.eq(purchaseOrderForm.getDemandId()!=null, PurchaseOrder::getDemandId, purchaseOrderForm.getDemandId());
         lqw.eq(purchaseOrderForm.getStatus()!=null, PurchaseOrder::getStatus, purchaseOrderForm.getStatus());
         lqw.like(purchaseOrderForm.getCode()!=null, PurchaseOrder::getCode, purchaseOrderForm.getCode());
         lqw.eq(purchaseOrderForm.getSupplierId()!=null, PurchaseOrder::getSupplierId, purchaseOrderForm.getSupplierId());
         lqw.eq(purchaseOrderForm.getEmployeeId()!=null, PurchaseOrder::getEmployeeId, purchaseOrderForm.getEmployeeId());
-        lqw.eq(purchaseOrderForm.getTime()!=null, PurchaseOrder::getTime, purchaseOrderForm.getTime());
+        lqw.ge(purchaseOrderForm.getStartTime()!=null, PurchaseOrder::getCreateTime, purchaseOrderForm.getStartTime());
+        lqw.le(purchaseOrderForm.getEndTime()!=null, PurchaseOrder::getCreateTime, purchaseOrderForm.getEndTime());
         lqw.eq(PurchaseOrder::getDelFlag, DelFlagEnum.NORMAL.getValue());
-        Page<PurchaseOrder> page = purchaseOrderForm.build();
-        Page<PurchaseOrder> result = purchaseOrderMapper.selectPage(page, lqw);
-        PageInfo<PurchaseOrder> tableDataInfo = PageInfo.build(result);
-        return tableDataInfo;
+        return lqw;
     }
 
     @Override
-    public List<PurchaseOrder> list() {
-        LambdaQueryWrapper<PurchaseOrder> lqw = Wrappers.lambdaQuery();
-        lqw.eq( PurchaseOrder::getDelFlag, DelFlagEnum.NORMAL.getValue());
+    public List<PurchaseOrder> list(PurchaseOrderForm purchaseOrderForm) {
+        LambdaQueryWrapper<PurchaseOrder> lqw = getPurchaseOrderLambdaQueryWrapper(purchaseOrderForm);
         return purchaseOrderMapper.selectList(lqw);
     }
 }

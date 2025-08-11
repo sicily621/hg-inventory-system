@@ -3,8 +3,10 @@ package com.hg.inventory.modules.purchase.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.hg.inventory.common.domain.form.PageQuery;
 import com.hg.inventory.common.domain.vo.PageInfo;
 import com.hg.inventory.common.enums.DelFlagEnum;
+import com.hg.inventory.modules.purchase.domain.entity.PurchaseOrder;
 import com.hg.inventory.modules.purchase.domain.entity.PurchaseReturn;
 import com.hg.inventory.modules.purchase.domain.form.PurchaseReturnForm;
 import com.hg.inventory.modules.purchase.mapper.PurchaseReturnMapper;
@@ -46,23 +48,28 @@ public class PurchaseReturnServiceImpl implements PurchaseReturnService {
     }
 
     @Override
-    public PageInfo<PurchaseReturn> page(PurchaseReturnForm purchaseReturnForm) {
-        LambdaQueryWrapper<PurchaseReturn> lqw = Wrappers.lambdaQuery();
-        lqw.eq(purchaseReturnForm.getStatus()!=null, PurchaseReturn::getStatus, purchaseReturnForm.getStatus());
-        lqw.like(purchaseReturnForm.getCode()!=null, PurchaseReturn::getCode, purchaseReturnForm.getCode());
-        lqw.eq(purchaseReturnForm.getEmployeeId()!=null, PurchaseReturn::getEmployeeId, purchaseReturnForm.getEmployeeId());
-        lqw.eq(purchaseReturnForm.getTime()!=null, PurchaseReturn::getTime, purchaseReturnForm.getTime());
-        lqw.eq(PurchaseReturn::getDelFlag, DelFlagEnum.NORMAL.getValue());
-        Page<PurchaseReturn> page = purchaseReturnForm.build();
+    public PageInfo<PurchaseReturn> page(PurchaseReturnForm purchaseReturnForm, PageQuery pageQuery) {
+        LambdaQueryWrapper<PurchaseReturn> lqw = getPurchaseReturnLambdaQueryWrapper(purchaseReturnForm);
+        Page<PurchaseReturn> page = pageQuery.build();
         Page<PurchaseReturn> result = purchaseReturnMapper.selectPage(page, lqw);
         PageInfo<PurchaseReturn> tableDataInfo = PageInfo.build(result);
         return tableDataInfo;
     }
 
-    @Override
-    public List<PurchaseReturn> list() {
+    private static LambdaQueryWrapper<PurchaseReturn> getPurchaseReturnLambdaQueryWrapper(PurchaseReturnForm purchaseReturnForm) {
         LambdaQueryWrapper<PurchaseReturn> lqw = Wrappers.lambdaQuery();
-        lqw.eq( PurchaseReturn::getDelFlag, DelFlagEnum.NORMAL.getValue());
+        lqw.eq(purchaseReturnForm.getStatus()!=null, PurchaseReturn::getStatus, purchaseReturnForm.getStatus());
+        lqw.like(purchaseReturnForm.getCode()!=null, PurchaseReturn::getCode, purchaseReturnForm.getCode());
+        lqw.eq(purchaseReturnForm.getEmployeeId()!=null, PurchaseReturn::getEmployeeId, purchaseReturnForm.getEmployeeId());
+        lqw.ge(purchaseReturnForm.getStartTime()!=null, PurchaseReturn::getCreateTime, purchaseReturnForm.getStartTime());
+        lqw.le(purchaseReturnForm.getEndTime()!=null, PurchaseReturn::getCreateTime, purchaseReturnForm.getEndTime());
+        lqw.eq(PurchaseReturn::getDelFlag, DelFlagEnum.NORMAL.getValue());
+        return lqw;
+    }
+
+    @Override
+    public List<PurchaseReturn> list(PurchaseReturnForm purchaseReturnForm) {
+        LambdaQueryWrapper<PurchaseReturn> lqw = getPurchaseReturnLambdaQueryWrapper(purchaseReturnForm);
         return purchaseReturnMapper.selectList(lqw);
     }
 }

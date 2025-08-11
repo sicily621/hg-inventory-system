@@ -1,5 +1,6 @@
 package com.hg.inventory.modules.purchase.controller;
 
+import com.hg.inventory.common.domain.form.PageQuery;
 import com.hg.inventory.common.domain.vo.PageInfo;
 import com.hg.inventory.common.domain.vo.Result;
 import com.hg.inventory.modules.purchase.domain.entity.PurchaseReturn;
@@ -58,14 +59,14 @@ public class PurchaseReturnController {
      * 分页查询采购退货单列表
      */
     @GetMapping("/page")
-    public Result<PageInfo<PurchaseReturn>> page(PurchaseReturnForm purchaseReturnForm){
-        return Result.success(purchaseReturnService.page(purchaseReturnForm));
+    public Result<PageInfo<PurchaseReturn>> page(PurchaseReturnForm purchaseReturnForm, PageQuery pageQuery){
+        return Result.success(purchaseReturnService.page(purchaseReturnForm,pageQuery));
     }
     /**
      * 查询采购退货单列表
      */
     @GetMapping("/list")
-    public Result<List<PurchaseReturn>> list(){
-        return Result.success(purchaseReturnService.list());
+    public Result<List<PurchaseReturn>> list(PurchaseReturnForm purchaseReturnForm){
+        return Result.success(purchaseReturnService.list(purchaseReturnForm));
     }
 }

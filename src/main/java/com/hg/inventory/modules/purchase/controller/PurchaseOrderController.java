@@ -1,5 +1,6 @@
 package com.hg.inventory.modules.purchase.controller;
 
+import com.hg.inventory.common.domain.form.PageQuery;
 import com.hg.inventory.common.domain.vo.PageInfo;
 import com.hg.inventory.common.domain.vo.Result;
 import com.hg.inventory.modules.purchase.domain.entity.PurchaseOrder;
@@ -58,15 +59,15 @@ public class PurchaseOrderController {
      * 分页查询采购订单列表
      */
     @GetMapping("/page")
-    public Result<PageInfo<PurchaseOrder>> page(PurchaseOrderForm purchaseOrderForm){
-        return Result.success(purchaseOrderService.page(purchaseOrderForm));
+    public Result<PageInfo<PurchaseOrder>> page(PurchaseOrderForm purchaseOrderForm, PageQuery pageQuery){
+        return Result.success(purchaseOrderService.page(purchaseOrderForm,pageQuery));
     }
     /**
      * 查询采购订单列表
      */
     @GetMapping("/list")
-    public Result<List<PurchaseOrder>> list(){
-        return Result.success(purchaseOrderService.list());
+    public Result<List<PurchaseOrder>> list(PurchaseOrderForm purchaseOrderForm){
+        return Result.success(purchaseOrderService.list(purchaseOrderForm));
     }
 
 }

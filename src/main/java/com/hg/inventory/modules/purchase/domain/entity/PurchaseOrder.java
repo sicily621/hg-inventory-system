@@ -15,10 +15,11 @@ public class PurchaseOrder extends BaseEntity {
     private String code;
     private Long supplierId;
     private Long employeeId;
-    private Date time;
     private Date expectedDate;
     private Date actualDate;
     private Integer status;
     private BigDecimal totalAmount;
-    private String remark;
+    private String description;
+    private Long approverId;
+    private Date approvalTime;
 }

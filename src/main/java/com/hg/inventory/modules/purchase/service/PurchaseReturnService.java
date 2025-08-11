@@ -1,5 +1,6 @@
 package com.hg.inventory.modules.purchase.service;
 
+import com.hg.inventory.common.domain.form.PageQuery;
 import com.hg.inventory.common.domain.vo.PageInfo;
 import com.hg.inventory.modules.purchase.domain.entity.PurchaseReturn;
 import com.hg.inventory.modules.purchase.domain.form.PurchaseReturnForm;
@@ -13,7 +14,7 @@ public interface PurchaseReturnService {
 
     boolean deleteById(Long id);
 
-    PageInfo<PurchaseReturn> page(PurchaseReturnForm purchaseReturnForm);
+    PageInfo<PurchaseReturn> page(PurchaseReturnForm purchaseReturnForm, PageQuery pageQuery);
 
-    List<PurchaseReturn> list();
+    List<PurchaseReturn> list(PurchaseReturnForm purchaseReturnForm);
 }
