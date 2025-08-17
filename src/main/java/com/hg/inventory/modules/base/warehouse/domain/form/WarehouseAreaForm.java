@@ -4,7 +4,7 @@ import com.hg.inventory.common.domain.form.PageQuery;
 import lombok.Data;
 
 @Data
-public class WarehouseAreaForm extends PageQuery {
+public class WarehouseAreaForm {
     private  Long warehouseId;
     private Integer type;
 }

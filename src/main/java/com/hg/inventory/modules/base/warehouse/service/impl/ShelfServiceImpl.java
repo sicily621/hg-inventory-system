@@ -3,6 +3,7 @@ package com.hg.inventory.modules.base.warehouse.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.hg.inventory.common.domain.form.PageQuery;
 import com.hg.inventory.common.domain.vo.PageInfo;
 import com.hg.inventory.common.enums.DelFlagEnum;
 import com.hg.inventory.modules.base.warehouse.domain.entity.Shelf;
@@ -53,22 +54,26 @@ public class ShelfServiceImpl implements ShelfService {
     }
 
     @Override
-    public List<Shelf> list() {
-        LambdaQueryWrapper<Shelf> lqw = Wrappers.lambdaQuery();
-        lqw.eq( Shelf::getDelFlag, DelFlagEnum.NORMAL.getValue());
+    public List<Shelf> list(ShelfForm shelfForm) {
+        LambdaQueryWrapper<Shelf> lqw = getShelfLambdaQueryWrapper(shelfForm);
         return shelfMapper.selectList(lqw);
     }
 
     @Override
-    public PageInfo<Shelf> page(ShelfForm shelfForm) {
+    public PageInfo<Shelf> page(ShelfForm shelfForm, PageQuery pageQuery) {
+        LambdaQueryWrapper<Shelf> lqw = getShelfLambdaQueryWrapper(shelfForm);
+        Page<Shelf> page = pageQuery.build();
+        Page<Shelf> result = shelfMapper.selectPage(page, lqw);
+        PageInfo<Shelf> tableDataInfo = PageInfo.build(result);
+        return tableDataInfo;
+    }
+
+    private static LambdaQueryWrapper<Shelf> getShelfLambdaQueryWrapper(ShelfForm shelfForm) {
         LambdaQueryWrapper<Shelf> lqw = Wrappers.lambdaQuery();
         lqw.eq(shelfForm.getAreaId()!=null, Shelf::getAreaId, shelfForm.getAreaId());
         lqw.like(shelfForm.getCode()!=null, Shelf::getCode, shelfForm.getCode());
         lqw.like(shelfForm.getName()!=null, Shelf::getName, shelfForm.getName());
         lqw.eq( Shelf::getDelFlag, DelFlagEnum.NORMAL.getValue());
-        Page<Shelf> page = shelfForm.build();
-        Page<Shelf> result = shelfMapper.selectPage(page, lqw);
-        PageInfo<Shelf> tableDataInfo = PageInfo.build(result);
-        return tableDataInfo;
+        return lqw;
     }
 }

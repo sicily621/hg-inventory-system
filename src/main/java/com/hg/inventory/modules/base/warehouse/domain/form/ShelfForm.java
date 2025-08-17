@@ -4,7 +4,7 @@ import com.hg.inventory.common.domain.form.PageQuery;
 import lombok.Data;
 
 @Data
-public class ShelfForm extends PageQuery {
+public class ShelfForm {
     private Long areaId;
     private String code;
     private String name;

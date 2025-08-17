@@ -1,5 +1,6 @@
 package com.hg.inventory.modules.base.warehouse.controller;
 
+import com.hg.inventory.common.domain.form.PageQuery;
 import com.hg.inventory.common.domain.vo.PageInfo;
 import com.hg.inventory.common.domain.vo.Result;
 import com.hg.inventory.modules.base.warehouse.domain.entity.Shelf;
@@ -66,15 +67,15 @@ public class ShelfController {
      * 查询货架列表
      */
     @GetMapping("/list")
-    public Result<List<Shelf>> list(){
-        return Result.success(shelfService.list());
+    public Result<List<Shelf>> list(ShelfForm shelfForm){
+        return Result.success(shelfService.list(shelfForm));
     }
 
     /**
      * 分页查询货架列表
      */
     @GetMapping("/page")
-    public Result<PageInfo<Shelf>> page(ShelfForm shelfForm){
-        return Result.success(shelfService.page(shelfForm));
+    public Result<PageInfo<Shelf>> page(ShelfForm shelfForm, PageQuery pageQuery){
+        return Result.success(shelfService.page(shelfForm,pageQuery));
     }
 }

@@ -17,4 +17,6 @@ public class PurchaseOrderForm {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date endTime;
     private Integer status;
+    private Integer startStatus;
+    private Integer endStatus;
 }

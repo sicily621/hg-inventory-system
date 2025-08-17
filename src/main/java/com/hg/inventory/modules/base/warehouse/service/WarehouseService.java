@@ -1,5 +1,6 @@
 package com.hg.inventory.modules.base.warehouse.service;
 
+import com.hg.inventory.common.domain.form.PageQuery;
 import com.hg.inventory.common.domain.vo.PageInfo;
 import com.hg.inventory.modules.base.warehouse.domain.entity.Warehouse;
 import com.hg.inventory.modules.base.warehouse.domain.form.WarehouseForm;
@@ -15,7 +16,7 @@ public interface WarehouseService {
 
     Boolean deleteById(Long id);
 
-    List<Warehouse> list();
+    List<Warehouse> list(WarehouseForm warehouseForm);
 
-    PageInfo<Warehouse> page(WarehouseForm warehouseForm);
+    PageInfo<Warehouse> page(WarehouseForm warehouseForm, PageQuery pageQuery);
 }

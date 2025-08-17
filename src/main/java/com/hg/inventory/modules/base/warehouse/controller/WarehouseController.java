@@ -1,5 +1,6 @@
 package com.hg.inventory.modules.base.warehouse.controller;
 
+import com.hg.inventory.common.domain.form.PageQuery;
 import com.hg.inventory.common.domain.vo.PageInfo;
 import com.hg.inventory.common.domain.vo.Result;
 import com.hg.inventory.modules.base.warehouse.domain.entity.Warehouse;
@@ -67,16 +68,16 @@ public class WarehouseController {
      * 查询仓库列表
      */
     @GetMapping("/list")
-    public Result<List<Warehouse>> list(){
-        return Result.success(warehouseService.list());
+    public Result<List<Warehouse>> list(WarehouseForm warehouseForm){
+        return Result.success(warehouseService.list(warehouseForm));
     }
 
     /**
      * 分页查询仓库列表
      */
     @GetMapping("/page")
-    public Result<PageInfo<Warehouse>> page(WarehouseForm warehouseForm){
-        return Result.success(warehouseService.page(warehouseForm));
+    public Result<PageInfo<Warehouse>> page(WarehouseForm warehouseForm, PageQuery pageQuery){
+        return Result.success(warehouseService.page(warehouseForm,pageQuery));
     }
 
 }

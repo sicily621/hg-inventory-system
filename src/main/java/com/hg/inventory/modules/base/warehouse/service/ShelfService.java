@@ -1,5 +1,6 @@
 package com.hg.inventory.modules.base.warehouse.service;
 
+import com.hg.inventory.common.domain.form.PageQuery;
 import com.hg.inventory.common.domain.vo.PageInfo;
 import com.hg.inventory.modules.base.warehouse.domain.entity.Shelf;
 import com.hg.inventory.modules.base.warehouse.domain.form.ShelfForm;
@@ -15,7 +16,7 @@ public interface ShelfService {
 
     Boolean deleteById(Long id);
 
-    List<Shelf> list();
+    List<Shelf> list(ShelfForm shelfForm);
 
-    PageInfo<Shelf> page(ShelfForm shelfForm);
+    PageInfo<Shelf> page(ShelfForm shelfForm, PageQuery pageQuery);
 }

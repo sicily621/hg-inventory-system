@@ -3,9 +3,9 @@ package com.hg.inventory.modules.base.warehouse.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.hg.inventory.common.domain.form.PageQuery;
 import com.hg.inventory.common.domain.vo.PageInfo;
 import com.hg.inventory.common.enums.DelFlagEnum;
-import com.hg.inventory.modules.base.warehouse.domain.entity.Warehouse;
 import com.hg.inventory.modules.base.warehouse.domain.entity.WarehouseArea;
 import com.hg.inventory.modules.base.warehouse.domain.form.WarehouseAreaForm;
 import com.hg.inventory.modules.base.warehouse.mapper.WarehouseAreaMapper;
@@ -54,21 +54,25 @@ public class WarehouseAreaServiceImpl implements WarehouseAreaService {
     }
 
     @Override
-    public List<WarehouseArea> list() {
-        LambdaQueryWrapper<WarehouseArea> lqw = Wrappers.lambdaQuery();
-        lqw.eq( WarehouseArea::getDelFlag, DelFlagEnum.NORMAL.getValue());
+    public List<WarehouseArea> list(WarehouseAreaForm warehouseAreaForm) {
+        LambdaQueryWrapper<WarehouseArea> lqw = getWarehouseAreaLambdaQueryWrapper(warehouseAreaForm);
         return warehouseAreaMapper.selectList(lqw);
     }
 
     @Override
-    public PageInfo<WarehouseArea> page(WarehouseAreaForm warehouseAreaForm) {
+    public PageInfo<WarehouseArea> page(WarehouseAreaForm warehouseAreaForm, PageQuery pageQuery) {
+        LambdaQueryWrapper<WarehouseArea> lqw = getWarehouseAreaLambdaQueryWrapper(warehouseAreaForm);
+        Page<WarehouseArea> page = pageQuery.build();
+        Page<WarehouseArea> result = warehouseAreaMapper.selectPage(page, lqw);
+        PageInfo<WarehouseArea> tableDataInfo = PageInfo.build(result);
+        return tableDataInfo;
+    }
+
+    private static LambdaQueryWrapper<WarehouseArea> getWarehouseAreaLambdaQueryWrapper(WarehouseAreaForm warehouseAreaForm) {
         LambdaQueryWrapper<WarehouseArea> lqw = Wrappers.lambdaQuery();
         lqw.eq(warehouseAreaForm.getWarehouseId()!=null, WarehouseArea::getWarehouseId, warehouseAreaForm.getWarehouseId());
         lqw.like(warehouseAreaForm.getType()!=null, WarehouseArea::getType, warehouseAreaForm.getType());
         lqw.eq( WarehouseArea::getDelFlag, DelFlagEnum.NORMAL.getValue());
-        Page<WarehouseArea> page = warehouseAreaForm.build();
-        Page<WarehouseArea> result = warehouseAreaMapper.selectPage(page, lqw);
-        PageInfo<WarehouseArea> tableDataInfo = PageInfo.build(result);
-        return tableDataInfo;
+        return lqw;
     }
 }

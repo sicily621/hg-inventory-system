@@ -63,6 +63,8 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         lqw.eq(purchaseOrderForm.getEmployeeId()!=null, PurchaseOrder::getEmployeeId, purchaseOrderForm.getEmployeeId());
         lqw.ge(purchaseOrderForm.getStartTime()!=null, PurchaseOrder::getCreateTime, purchaseOrderForm.getStartTime());
         lqw.le(purchaseOrderForm.getEndTime()!=null, PurchaseOrder::getCreateTime, purchaseOrderForm.getEndTime());
+        lqw.ge(purchaseOrderForm.getStartStatus()!=null, PurchaseOrder::getStatus, purchaseOrderForm.getStartStatus());
+        lqw.le(purchaseOrderForm.getEndStatus()!=null, PurchaseOrder::getStatus, purchaseOrderForm.getEndStatus());
         lqw.eq(PurchaseOrder::getDelFlag, DelFlagEnum.NORMAL.getValue());
         return lqw;
     }

@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
-@TableName("hg_sales_order")
+@TableName("hg_sales_return")
 public class SalesReturn  extends BaseEntity {
     private Long id;
     private String code;

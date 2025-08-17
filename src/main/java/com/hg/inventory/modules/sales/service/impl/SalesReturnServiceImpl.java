@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hg.inventory.common.domain.form.PageQuery;
 import com.hg.inventory.common.domain.vo.PageInfo;
 import com.hg.inventory.common.enums.DelFlagEnum;
+import com.hg.inventory.modules.sales.domain.entity.SalesOrder;
 import com.hg.inventory.modules.sales.domain.entity.SalesReturn;
 import com.hg.inventory.modules.sales.domain.form.SalesReturnForm;
 import com.hg.inventory.modules.sales.mapper.SalesReturnMapper;
@@ -62,6 +63,8 @@ public class SalesReturnServiceImpl implements SalesReturnService {
         lqw.eq(salesReturnForm.getEmployeeId()!=null, SalesReturn::getEmployeeId, salesReturnForm.getEmployeeId());
         lqw.ge(salesReturnForm.getStartTime()!=null, SalesReturn::getCreateTime, salesReturnForm.getStartTime());
         lqw.le(salesReturnForm.getEndTime()!=null, SalesReturn::getCreateTime, salesReturnForm.getEndTime());
+        lqw.ge(salesReturnForm.getStartStatus()!=null, SalesReturn::getStatus, salesReturnForm.getStartStatus());
+        lqw.le(salesReturnForm.getEndTime() !=null, SalesReturn::getStatus, salesReturnForm.getEndStatus());
         lqw.eq(SalesReturn::getDelFlag, DelFlagEnum.NORMAL.getValue());
         return lqw;
     }
