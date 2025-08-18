@@ -72,7 +72,6 @@ public class InventoryShipmentServiceImpl implements InventoryShipmentService {
         lqw.like(inventoryShipmentForm.getCode()!=null, InventoryShipment::getCode, inventoryShipmentForm.getCode());
         lqw.eq(inventoryShipmentForm.getWarehouseId()!=null, InventoryShipment::getWarehouseId, inventoryShipmentForm.getWarehouseId());
         lqw.like(inventoryShipmentForm.getOrderId()!=null, InventoryShipment::getOrderId, inventoryShipmentForm.getOrderId());
-        lqw.eq(inventoryShipmentForm.getStatus()!=null, InventoryShipment::getStatus, inventoryShipmentForm.getStatus());
         lqw.eq(inventoryShipmentForm.getEmployeeId()!=null, InventoryShipment::getEmployeeId, inventoryShipmentForm.getEmployeeId());
         lqw.eq( InventoryShipment::getDelFlag, DelFlagEnum.NORMAL.getValue());
         return lqw;

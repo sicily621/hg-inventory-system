@@ -8,5 +8,4 @@ public class InventoryReceiptForm {
     private Long orderId;
     private Long employeeId;
     private Long warehouseId;
-    private Integer status;
 }

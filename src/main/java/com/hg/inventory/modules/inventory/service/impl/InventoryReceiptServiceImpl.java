@@ -72,7 +72,6 @@ public class InventoryReceiptServiceImpl implements InventoryReceiptService {
         lqw.like(inventoryReceiptForm.getCode()!=null, InventoryReceipt::getCode, inventoryReceiptForm.getCode());
         lqw.eq(inventoryReceiptForm.getWarehouseId()!=null, InventoryReceipt::getWarehouseId, inventoryReceiptForm.getWarehouseId());
         lqw.like(inventoryReceiptForm.getOrderId()!=null, InventoryReceipt::getOrderId, inventoryReceiptForm.getOrderId());
-        lqw.eq(inventoryReceiptForm.getStatus()!=null, InventoryReceipt::getStatus, inventoryReceiptForm.getStatus());
         lqw.eq(inventoryReceiptForm.getEmployeeId()!=null, InventoryReceipt::getEmployeeId, inventoryReceiptForm.getEmployeeId());
         lqw.eq( InventoryReceipt::getDelFlag, DelFlagEnum.NORMAL.getValue());
         return lqw;
