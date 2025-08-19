@@ -64,7 +64,7 @@ public class SalesReturnServiceImpl implements SalesReturnService {
         lqw.ge(salesReturnForm.getStartTime()!=null, SalesReturn::getCreateTime, salesReturnForm.getStartTime());
         lqw.le(salesReturnForm.getEndTime()!=null, SalesReturn::getCreateTime, salesReturnForm.getEndTime());
         lqw.ge(salesReturnForm.getStartStatus()!=null, SalesReturn::getStatus, salesReturnForm.getStartStatus());
-        lqw.le(salesReturnForm.getEndTime() !=null, SalesReturn::getStatus, salesReturnForm.getEndStatus());
+        lqw.le(salesReturnForm.getEndStatus() !=null, SalesReturn::getStatus, salesReturnForm.getEndStatus());
         lqw.eq(SalesReturn::getDelFlag, DelFlagEnum.NORMAL.getValue());
         return lqw;
     }

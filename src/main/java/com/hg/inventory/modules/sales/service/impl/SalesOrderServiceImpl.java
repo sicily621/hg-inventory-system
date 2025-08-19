@@ -62,7 +62,7 @@ public class SalesOrderServiceImpl implements SalesOrderService {
         lqw.ge(salesOrderForm.getStartTime()!=null, SalesOrder::getCreateTime, salesOrderForm.getStartTime());
         lqw.le(salesOrderForm.getEndTime()!=null, SalesOrder::getCreateTime, salesOrderForm.getEndTime());
         lqw.ge(salesOrderForm.getStartStatus()!=null, SalesOrder::getStatus, salesOrderForm.getStartStatus());
-        lqw.le(salesOrderForm.getEndTime() !=null, SalesOrder::getStatus, salesOrderForm.getEndStatus());
+        lqw.le(salesOrderForm.getEndStatus() !=null, SalesOrder::getStatus, salesOrderForm.getEndStatus());
         lqw.eq(SalesOrder::getDelFlag, DelFlagEnum.NORMAL.getValue());
         return lqw;
     }
