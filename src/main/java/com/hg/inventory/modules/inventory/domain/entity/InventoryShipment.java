@@ -11,7 +11,5 @@ public class InventoryShipment extends BaseEntity {
     private String code;
     private Long orderId;
     private Long employeeId;
-    private Long warehouseId;
-    private Integer status;
     private String description;
 }

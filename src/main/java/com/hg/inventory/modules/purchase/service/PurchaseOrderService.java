@@ -17,4 +17,5 @@ public interface PurchaseOrderService {
     PageInfo<PurchaseOrder> page(PurchaseOrderForm purchaseOrderForm, PageQuery pageQuery);
 
     List<PurchaseOrder> list(PurchaseOrderForm purchaseOrderForm);
+
 }

@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class InventoryCheckForm {
-    private Long code;
+    private String code;
     private Long warehouseId;
     private Long employeeId;
     private Integer status;

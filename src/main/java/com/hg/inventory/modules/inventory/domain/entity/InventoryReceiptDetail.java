@@ -17,6 +17,7 @@ public class InventoryReceiptDetail  extends BaseEntity {
     private BigDecimal quantity;
     private BigDecimal price;
     private BigDecimal amount;
+    private Long warehouseId;
     private Long areaId;
     private Long shelfId;
     private String batchNumber;

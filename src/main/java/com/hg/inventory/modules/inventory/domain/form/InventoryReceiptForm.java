@@ -4,9 +4,7 @@ import lombok.Data;
 
 @Data
 public class InventoryReceiptForm {
-    private Long code;
+    private String code;
     private Long orderId;
     private Long employeeId;
-    private Long warehouseId;
-    private Integer status;
 }
