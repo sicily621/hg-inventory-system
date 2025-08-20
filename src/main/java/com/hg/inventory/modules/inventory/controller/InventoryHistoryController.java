@@ -24,6 +24,14 @@ public class InventoryHistoryController {
         return Result.success(inventoryHistoryService.save(inventoryHistory));
     }
     /**
+     * 批量新建库存历史
+     */
+    @PostMapping("batchSave")
+    public Result<Boolean> create(@RequestBody List<InventoryHistory> inventoryHistorys){
+        inventoryHistoryService.batchSave(inventoryHistorys);
+        return Result.success();
+    }
+    /**
      * 修改库存历史
      * @param inventoryHistory
      * @return

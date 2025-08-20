@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hg.inventory.common.domain.form.PageQuery;
 import com.hg.inventory.common.domain.vo.PageInfo;
+import com.hg.inventory.common.domain.vo.Result;
 import com.hg.inventory.common.enums.DelFlagEnum;
 import com.hg.inventory.modules.inventory.domain.entity.Inventory;
 import com.hg.inventory.modules.inventory.domain.entity.InventoryHistory;
@@ -69,6 +70,13 @@ public class InventoryHistoryServiceImpl implements InventoryHistoryService {
         PageInfo<InventoryHistory> tableDataInfo = PageInfo.build(result);
         return tableDataInfo;
     }
+
+    @Override
+    public boolean batchSave(List<InventoryHistory> inventoryHistorys) {
+        boolean result =  inventoryHistoryMapper.insertOrUpdateBatch(inventoryHistorys);
+        return result;
+    }
+
     private LambdaQueryWrapper<InventoryHistory> getQueryWrapper(InventoryHistoryForm inventoryHistoryForm) {
         LambdaQueryWrapper<InventoryHistory> lqw = Wrappers.lambdaQuery();
         lqw.eq(inventoryHistoryForm.getProductId()!=null, InventoryHistory::getProductId, inventoryHistoryForm.getProductId());

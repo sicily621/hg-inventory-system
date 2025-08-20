@@ -14,9 +14,5 @@ public class Inventory extends BaseEntity {
     private Long warehouseId;
     private Long shelfId;
     private Long areaId;
-    private BigDecimal currentQuantity;
-    private BigDecimal availableQuantity;
-    private BigDecimal lockedQuantity;
-    private BigDecimal minQuantity;
-    private BigDecimal maxQuantity;
+    private BigDecimal quantity;
 }

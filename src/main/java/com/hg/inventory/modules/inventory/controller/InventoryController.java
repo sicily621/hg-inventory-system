@@ -24,6 +24,20 @@ public class InventoryController {
         return Result.success(inventoryService.save(inventory));
     }
     /**
+     * 入库
+     */
+    @PostMapping("/add")
+    public Result<List<Inventory>> receipt(@RequestBody List<Inventory> inventoryList){
+        return Result.success(inventoryService.receipt(inventoryList));
+    }
+    /**
+     * 出库
+     */
+    @PostMapping("/subtract")
+    public Result<List<Inventory>> shipment(@RequestBody List<Inventory> inventoryList){
+        return Result.success(inventoryService.shipment(inventoryList));
+    }
+    /**
      * 修改库存
      * @param inventory
      * @return
@@ -31,6 +45,14 @@ public class InventoryController {
     @PutMapping()
     public Result<Inventory> update(@RequestBody Inventory inventory){
         return Result.success(inventoryService.save(inventory));
+    }/**
+     * 批量修改库存
+     * @param inventoryList
+     * @return
+     */
+    @PutMapping("/batchUpdate")
+    public Result<List<Inventory>> update(@RequestBody List<Inventory> inventoryList){
+        return Result.success(inventoryService.batchUpdate(inventoryList));
     }
     /**
      * 根据库存Id查询库存

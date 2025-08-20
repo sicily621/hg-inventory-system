@@ -19,4 +19,6 @@ public interface InventoryHistoryService {
     List<InventoryHistory> list(InventoryHistoryForm inventoryHistoryForm);
 
     PageInfo<InventoryHistory> page(InventoryHistoryForm inventoryHistoryForm, PageQuery pageQuery);
+
+    boolean batchSave(List<InventoryHistory> inventoryHistorys);
 }

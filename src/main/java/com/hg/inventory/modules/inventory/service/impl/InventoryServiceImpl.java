@@ -14,6 +14,8 @@ import com.hg.inventory.modules.inventory.service.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -68,6 +70,145 @@ public class InventoryServiceImpl implements InventoryService {
         PageInfo<Inventory> tableDataInfo = PageInfo.build(result);
         return tableDataInfo;
     }
+
+    @Override
+    public List<Inventory> receipt(List<Inventory> inventoryList) {
+        // 校验输入列表
+        if (inventoryList == null || inventoryList.isEmpty()) {
+            return new ArrayList<>(); // 返回空列表而非null，避免NPE
+        }
+
+        List<Inventory> resultList = new ArrayList<>(inventoryList.size());
+
+        for (Inventory inventory : inventoryList) {
+            // 跳过空对象
+            if (inventory == null) {
+                continue;
+            }
+
+            // 构建查询条件
+            LambdaQueryWrapper<Inventory> queryWrapper = Wrappers.lambdaQuery();
+            queryWrapper.eq(inventory.getProductId() != null, Inventory::getProductId, inventory.getProductId())
+                        .eq(inventory.getWarehouseId() != null, Inventory::getWarehouseId, inventory.getWarehouseId())
+                        .eq(inventory.getShelfId() != null, Inventory::getShelfId, inventory.getShelfId())
+                        .eq(inventory.getAreaId() != null, Inventory::getAreaId, inventory.getAreaId())
+                        .eq(Inventory::getDelFlag, DelFlagEnum.NORMAL.getValue());
+
+            // 查询是否存在匹配记录
+            Inventory existingInventory = inventoryMapper.selectOne(queryWrapper);
+            BigDecimal incomingQty = inventory.getQuantity() != null ? inventory.getQuantity() : BigDecimal.ZERO;
+
+            if (existingInventory != null) {
+                // 存在匹配记录，累加数量
+                BigDecimal existingQty = existingInventory.getQuantity() != null ? existingInventory.getQuantity() : BigDecimal.ZERO;
+                BigDecimal newQuantity = existingQty.add(incomingQty); // 累加操作
+                existingInventory.setQuantity(newQuantity);
+
+                // 更新并添加到结果列表
+                inventoryMapper.updateById(existingInventory);
+                resultList.add(existingInventory);
+            } else {
+                // 不存在匹配记录，新增
+                inventoryMapper.insert(inventory);
+                resultList.add(inventory);
+            }
+        }
+
+        return resultList; // 返回完整处理结果列表
+    }
+
+    @Override
+    public List<Inventory> shipment(List<Inventory> inventoryList) {
+        // 校验输入列表
+        if (inventoryList == null || inventoryList.isEmpty()) {
+            return new ArrayList<>(); // 返回空列表而非null，避免NPE
+        }
+
+        List<Inventory> resultList = new ArrayList<>(inventoryList.size());
+
+        for (Inventory inventory : inventoryList) {
+            // 跳过空对象
+            if (inventory == null) {
+                continue;
+            }
+
+            // 构建查询条件
+            LambdaQueryWrapper<Inventory> queryWrapper = Wrappers.lambdaQuery();
+            queryWrapper.eq(inventory.getProductId() != null, Inventory::getProductId, inventory.getProductId())
+                        .eq(inventory.getWarehouseId() != null, Inventory::getWarehouseId, inventory.getWarehouseId())
+                        .eq(inventory.getShelfId() != null, Inventory::getShelfId, inventory.getShelfId())
+                        .eq(inventory.getAreaId() != null, Inventory::getAreaId, inventory.getAreaId())
+                        .eq(Inventory::getDelFlag, DelFlagEnum.NORMAL.getValue());
+
+            // 查询是否存在匹配记录
+            Inventory existingInventory = inventoryMapper.selectOne(queryWrapper);
+            BigDecimal incomingQty = inventory.getQuantity() != null ? inventory.getQuantity() : BigDecimal.ZERO;
+
+            if (existingInventory != null) {
+                // 存在匹配记录，累加数量
+                BigDecimal existingQty = existingInventory.getQuantity() != null ? existingInventory.getQuantity() : BigDecimal.ZERO;
+                BigDecimal newQuantity = existingQty.subtract(incomingQty); // 累加操作
+                existingInventory.setQuantity(newQuantity);
+
+                // 更新并添加到结果列表
+                inventoryMapper.updateById(existingInventory);
+                resultList.add(existingInventory);
+            } else {
+                // 不存在匹配记录，新增
+                inventoryMapper.insert(inventory);
+                resultList.add(inventory);
+            }
+        }
+
+        return resultList; // 返回完整处理结果列表
+    }
+
+    @Override
+    public List<Inventory> batchUpdate(List<Inventory> inventoryList) {
+        // 校验输入列表
+        if (inventoryList == null || inventoryList.isEmpty()) {
+            return new ArrayList<>(); // 返回空列表而非null，避免NPE
+        }
+
+        List<Inventory> resultList = new ArrayList<>(inventoryList.size());
+
+        for (Inventory inventory : inventoryList) {
+            // 跳过空对象
+            if (inventory == null) {
+                continue;
+            }
+
+            // 构建查询条件
+            LambdaQueryWrapper<Inventory> queryWrapper = Wrappers.lambdaQuery();
+            queryWrapper.eq(inventory.getProductId() != null, Inventory::getProductId, inventory.getProductId())
+                        .eq(inventory.getWarehouseId() != null, Inventory::getWarehouseId, inventory.getWarehouseId())
+                        .eq(inventory.getShelfId() != null, Inventory::getShelfId, inventory.getShelfId())
+                        .eq(inventory.getAreaId() != null, Inventory::getAreaId, inventory.getAreaId())
+                        .eq(Inventory::getDelFlag, DelFlagEnum.NORMAL.getValue());
+
+            // 查询是否存在匹配记录
+            Inventory existingInventory = inventoryMapper.selectOne(queryWrapper);
+            BigDecimal incomingQty = inventory.getQuantity() != null ? inventory.getQuantity() : BigDecimal.ZERO;
+
+            if (existingInventory != null) {
+                // 存在匹配记录，累加数量
+                BigDecimal existingQty = existingInventory.getQuantity() != null ? existingInventory.getQuantity() : BigDecimal.ZERO;
+                BigDecimal newQuantity = existingQty.subtract(incomingQty); // 累加操作
+                existingInventory.setQuantity(newQuantity);
+
+                // 更新并添加到结果列表
+                inventoryMapper.updateById(existingInventory);
+                resultList.add(existingInventory);
+            } else {
+                // 不存在匹配记录，新增
+                inventoryMapper.insert(inventory);
+                resultList.add(inventory);
+            }
+        }
+
+        return resultList; // 返回完整处理结果列表
+    }
+
     private LambdaQueryWrapper<Inventory> getQueryWrapper(InventoryForm inventoryForm) {
         LambdaQueryWrapper<Inventory> lqw = Wrappers.lambdaQuery();
         lqw.eq(inventoryForm.getProductId()!=null, Inventory::getProductId, inventoryForm.getProductId());

@@ -19,4 +19,10 @@ public interface InventoryService {
     List<Inventory> list(InventoryForm inventoryForm);
 
     PageInfo<Inventory> page(InventoryForm inventoryForm, PageQuery pageQuery);
+
+    List<Inventory> receipt(List<Inventory> inventoryList);
+
+    List<Inventory> shipment(List<Inventory> inventoryList);
+
+    List<Inventory> batchUpdate(List<Inventory> inventoryList);
 }
