@@ -19,5 +19,5 @@ public class InventoryShipmentDetail  extends BaseEntity {
     private Long warehouseId;
     private Long areaId;
     private Long shelfId;
-    private String batchNumber;
+    private Integer batchNumber;
 }

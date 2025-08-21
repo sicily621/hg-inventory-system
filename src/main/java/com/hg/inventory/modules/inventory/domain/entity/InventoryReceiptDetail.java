@@ -20,7 +20,7 @@ public class InventoryReceiptDetail  extends BaseEntity {
     private Long warehouseId;
     private Long areaId;
     private Long shelfId;
-    private String batchNumber;
+    private Integer batchNumber;
     private Date productionDate;
     private Date  expirationDate;
 }
