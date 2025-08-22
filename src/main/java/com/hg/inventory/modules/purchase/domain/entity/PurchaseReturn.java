@@ -15,9 +15,9 @@ public class PurchaseReturn extends BaseEntity {
     private Long orderId;
     private Long employeeId;
     private Integer status;
-    private Long supplierId;
     private String description;
     private BigDecimal totalAmount;
     private Long approverId;
     private Date approvalTime;
+    private Integer receipt;
 }

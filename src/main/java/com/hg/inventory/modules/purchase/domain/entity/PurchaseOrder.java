@@ -13,7 +13,6 @@ public class PurchaseOrder extends BaseEntity {
     private Long id;
     private Long demandId;
     private String code;
-    private Long supplierId;
     private Long employeeId;
     private Date expectedDate;
     private Date actualDate;

@@ -11,6 +11,7 @@ import com.hg.inventory.modules.inventory.domain.entity.Inventory;
 import com.hg.inventory.modules.inventory.domain.form.InventoryForm;
 import com.hg.inventory.modules.inventory.mapper.InventoryMapper;
 import com.hg.inventory.modules.inventory.service.InventoryService;
+import com.hg.inventory.modules.purchase.domain.entity.PurchaseOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -215,6 +216,7 @@ public class InventoryServiceImpl implements InventoryService {
         lqw.eq(inventoryForm.getWarehouseId()!=null, Inventory::getWarehouseId, inventoryForm.getWarehouseId());
         lqw.eq(inventoryForm.getShelfId()!=null, Inventory::getShelfId, inventoryForm.getShelfId());
         lqw.eq(inventoryForm.getAreaId()!=null, Inventory::getAreaId, inventoryForm.getAreaId());
+        lqw.gt( Inventory::getQuantity, 0);
         lqw.eq( Inventory::getDelFlag, DelFlagEnum.NORMAL.getValue());
         return lqw;
     }

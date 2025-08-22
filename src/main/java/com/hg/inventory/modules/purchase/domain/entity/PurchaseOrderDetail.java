@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 public class PurchaseOrderDetail extends BaseEntity {
     private Long id;
     private Long orderId;
+    private Long supplierId;
     private Long categoryId;
     private Long productId;
     private BigDecimal quantity;

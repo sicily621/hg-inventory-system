@@ -10,7 +10,6 @@ import java.util.Date;
 public class PurchaseOrderForm {
     private Long demandId;
     private String code;
-    private Long supplierId;
     private Long employeeId;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date startTime;

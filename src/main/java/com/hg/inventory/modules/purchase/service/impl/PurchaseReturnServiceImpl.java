@@ -65,6 +65,7 @@ public class PurchaseReturnServiceImpl implements PurchaseReturnService {
         lqw.le(purchaseReturnForm.getEndTime()!=null, PurchaseReturn::getCreateTime, purchaseReturnForm.getEndTime());
         lqw.ge(purchaseReturnForm.getStartStatus()!=null, PurchaseReturn::getStatus, purchaseReturnForm.getStartStatus());
         lqw.le(purchaseReturnForm.getEndStatus()!=null, PurchaseReturn::getStatus, purchaseReturnForm.getEndStatus());
+        lqw.eq(purchaseReturnForm.getReceipt()!=null, PurchaseReturn::getReceipt, purchaseReturnForm.getReceipt());
         lqw.eq(PurchaseReturn::getDelFlag, DelFlagEnum.NORMAL.getValue());
         return lqw;
     }

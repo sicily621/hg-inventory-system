@@ -17,4 +17,5 @@ public class PurchaseReturnForm {
     private Integer status;
     private Integer startStatus;
     private Integer endStatus;
+    private Integer receipt;
 }
