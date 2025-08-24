@@ -1,5 +1,6 @@
 package com.hg.inventory.modules.login.controller;
 
+import cn.dev33.satoken.annotation.SaIgnore;
 import com.hg.inventory.common.domain.vo.Result;
 import com.hg.inventory.modules.base.customer.domain.entity.Customer;
 import com.hg.inventory.modules.login.domain.form.LoginForm;
@@ -11,8 +12,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RequestMapping("/login")
+/**
+ * 登录
+ */
+@SaIgnore
 @RestController
+@RequestMapping("/login")
 public class LoginController {
     @Autowired
     private LoginService loginService;
@@ -23,4 +28,5 @@ public class LoginController {
     public Result<LoginResponse> login(@RequestBody LoginForm LoginForm){
         return Result.success(loginService.login(LoginForm));
     }
+
 }

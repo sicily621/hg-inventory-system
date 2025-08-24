@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * 入库
+ */
 @RequestMapping("/inventory/receipt")
 @RestController
 public class InventoryReceiptController {

@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * 货架
+ */
 @RequestMapping("/warehouse/shelf")
 @RestController
 public class ShelfController {

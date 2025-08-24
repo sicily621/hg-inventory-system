@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * 库存盘点详情
+ */
 @RequestMapping("/inventory/check/detail")
 @RestController
 public class InventoryCheckDetailController {

@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * 角色权限关系
+ */
 @RequestMapping("/role/permission/relations")
 @RestController
 public class RolePermissionController {

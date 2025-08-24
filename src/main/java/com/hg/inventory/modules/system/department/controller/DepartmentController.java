@@ -1,6 +1,5 @@
 package com.hg.inventory.modules.system.department.controller;
 
-import com.hg.inventory.common.domain.vo.PageInfo;
 import com.hg.inventory.common.domain.vo.Result;
 import com.hg.inventory.modules.system.department.domain.entity.Department;
 import com.hg.inventory.modules.system.department.service.DepartmentService;
@@ -9,6 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * 部门
+ */
 @RequestMapping("/department")
 @RestController
 public class DepartmentController {

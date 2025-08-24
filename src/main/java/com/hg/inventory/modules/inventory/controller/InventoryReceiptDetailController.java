@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * 入库详情
+ */
 @RequestMapping("/inventory/receipt/detail")
 @RestController
 public class InventoryReceiptDetailController {

@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * 区域
+ */
 @RequestMapping("/warehouse/area")
 @RestController
 public class WarehouseAreaController {

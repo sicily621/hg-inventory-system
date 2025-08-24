@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * 客戶
+ */
 @RequestMapping("/customer")
 @RestController
 public class CustomerController {

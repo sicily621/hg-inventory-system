@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * 仓库
+ */
 @RequestMapping("/warehouse")
 @RestController
 public class WarehouseController {

@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * 库存
+ */
 @RequestMapping("/inventory")
 @RestController
 public class InventoryController {

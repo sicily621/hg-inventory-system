@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * 供应商
+ */
 @RequestMapping("/supplier")
 @RestController
 public class SupplierController {

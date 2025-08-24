@@ -35,10 +35,10 @@ import java.util.Set;
  *
  * @author zm
  */
-//@Configuration
+@Configuration
 @RequiredArgsConstructor
 @EnableConfigurationProperties(SpringDocProperties.class)
-@ConditionalOnProperty(name = "springdoc.api-docs.enabled", havingValue = "true", matchIfMissing = true)
+//@ConditionalOnProperty(name = "springdoc.api-docs.enabled", havingValue = "true", matchIfMissing = true)
 public class SpringDocConfig {
 
     private final ServerProperties serverProperties;
@@ -115,7 +115,7 @@ public class SpringDocConfig {
     /**
      * 单独使用一个类便于判断 解决springdoc路径拼接重复问题
      *
-     * @author zy
+     * @author zm
      */
     static class PlusPaths extends Paths {
 

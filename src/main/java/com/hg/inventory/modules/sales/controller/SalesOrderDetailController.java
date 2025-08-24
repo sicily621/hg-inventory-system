@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * 销售订单详情
+ */
 @RequestMapping("/sales/order/detail")
 @RestController
 public class SalesOrderDetailController {

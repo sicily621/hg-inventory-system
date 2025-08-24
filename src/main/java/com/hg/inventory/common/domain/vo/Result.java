@@ -12,28 +12,27 @@ public class Result<T> {
     private String msg;
     private T data;
     public static <T> Result<T> success(){
-        Result<T> objectResult = new Result<>();
-        objectResult.setCode(SUCCESS);
-        objectResult.setMsg(SUCCESS_STRING);
-        return objectResult;
+        return buildResult(null, SUCCESS, SUCCESS_STRING);
     }
     public static <T> Result<T> success(T data){
-        Result<T> objectResult = new Result<>();
-        objectResult.setCode(SUCCESS);
-        objectResult.setMsg(SUCCESS_STRING);
-        objectResult.setData(data);
-        return objectResult;
+        return buildResult(data, SUCCESS, SUCCESS_STRING);
     }
+
     public static <T> Result<T> fail(){
-        Result<T> objectResult = new Result<>();
-        objectResult.setCode(FAIL);
-        objectResult.setMsg(FAIL_STRING);
-        return objectResult;
+        return buildResult(null, FAIL, FAIL_STRING);
     }
     public static <T> Result<T> fail(String msg){
+        return buildResult(null, FAIL, msg);
+    }
+
+    public static <T> Result<T> fail(int code, String msg) {
+        return buildResult(null, code, msg);
+    }
+    private static <T> Result<T> buildResult(T data, int code, String msg) {
         Result<T> objectResult = new Result<>();
-        objectResult.setCode(FAIL);
+        objectResult.setCode(code);
         objectResult.setMsg(msg);
+        objectResult.setData(data);
         return objectResult;
     }
 }

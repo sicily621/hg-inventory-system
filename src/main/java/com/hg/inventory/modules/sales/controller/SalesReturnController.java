@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * 销售退货单
+ */
 @RequestMapping("/sales/return")
 @RestController
 public class SalesReturnController {

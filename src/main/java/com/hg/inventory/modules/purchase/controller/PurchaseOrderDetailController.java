@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * 采购订单详情
+ */
 @RequestMapping("/purchase/order/detail")
 @RestController
 public class PurchaseOrderDetailController {

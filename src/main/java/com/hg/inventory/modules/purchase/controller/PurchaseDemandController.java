@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * 采购需求
+ */
 @RequestMapping("/purchase/demand")
 @RestController
 public class PurchaseDemandController {

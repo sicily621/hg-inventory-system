@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * 库存历史
+ */
 @RequestMapping("/inventory/history")
 @RestController
 public class InventoryHistoryController {

@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * 采购订单
+ */
 @RequestMapping("/purchase/order")
 @RestController
 public class PurchaseOrderController {

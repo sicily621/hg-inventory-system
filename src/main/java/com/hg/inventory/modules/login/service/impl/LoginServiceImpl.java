@@ -1,5 +1,7 @@
 package com.hg.inventory.modules.login.service.impl;
 
+import cn.dev33.satoken.secure.BCrypt;
+import cn.dev33.satoken.stp.StpUtil;
 import com.hg.inventory.modules.login.domain.form.LoginForm;
 import com.hg.inventory.modules.login.domain.vo.LoginResponse;
 import com.hg.inventory.modules.login.service.LoginService;
@@ -20,11 +22,14 @@ public class LoginServiceImpl implements LoginService {
         LoginResponse loginResponse = new LoginResponse();
         if(employee!=null){
             if(employee.getPassword().equals(password)){
+//            if(employee.getPassword().equals(password)){
+                StpUtil.login(employee.getId());
+                StpUtil.getTokenSession().set(""+employee.getId(), employee);
                 loginResponse.setId(employee.getId());
                 loginResponse.setRoleId(employee.getRoleId());
                 loginResponse.setDepartmentId(employee.getDepartmentId());
                 loginResponse.setUsername(employee.getUsername());
-                loginResponse.setToken("123456");
+                loginResponse.setToken(StpUtil.getTokenValue());
                 loginResponse.setMsg("登录成功");
             }else{
                 loginResponse.setMsg("密码错误");
