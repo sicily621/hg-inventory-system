@@ -5,6 +5,7 @@ import com.hg.inventory.common.domain.vo.Result;
 import com.hg.inventory.modules.account.domain.entity.Account;
 import com.hg.inventory.modules.account.domain.form.AccountForm;
 import com.hg.inventory.modules.account.service.AccountService;
+import com.hg.inventory.modules.inventory.domain.entity.InventoryReceiptDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -78,5 +79,13 @@ public class AccountController {
     @GetMapping("/page")
     public Result<PageInfo<Account>> page(AccountForm accountForm){
         return Result.success(accountService.page(accountForm));
+    }
+    /**
+     * 批量生成账单
+     */
+    @PostMapping("batchSave")
+    public Result<Boolean> batchSave(@RequestBody List<Account> Accounts){
+        accountService.batchSave(Accounts);
+        return Result.success();
     }
 }

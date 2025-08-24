@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hg.inventory.common.domain.vo.PageInfo;
+import com.hg.inventory.common.domain.vo.Result;
 import com.hg.inventory.common.enums.DelFlagEnum;
 import com.hg.inventory.modules.account.domain.entity.Account;
 import com.hg.inventory.modules.account.domain.form.AccountForm;
@@ -81,5 +82,11 @@ public class AccountServiceImpl implements AccountService {
         lqw.eq( Account::getDelFlag, DelFlagEnum.NORMAL.getValue());
         List<Account> result = accountMapper.selectList(lqw);
         return result;
+    }
+
+    @Override
+    public Result<Boolean> batchSave(List<Account> accounts) {
+        accountMapper.insertOrUpdateBatch(accounts);
+        return Result.success();
     }
 }

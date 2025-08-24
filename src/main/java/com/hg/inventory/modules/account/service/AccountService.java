@@ -1,6 +1,7 @@
 package com.hg.inventory.modules.account.service;
 
 import com.hg.inventory.common.domain.vo.PageInfo;
+import com.hg.inventory.common.domain.vo.Result;
 import com.hg.inventory.modules.account.domain.entity.Account;
 import com.hg.inventory.modules.account.domain.form.AccountForm;
 
@@ -20,4 +21,6 @@ public interface AccountService {
     PageInfo<Account> page(AccountForm accountForm);
 
     List<Account> getByOrderId(Long orderId);
+
+    Result<Boolean> batchSave(List<Account> accounts);
 }
