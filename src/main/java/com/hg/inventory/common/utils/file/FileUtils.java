@@ -1,7 +1,7 @@
 package com.hg.inventory.common.utils.file;
 
 import cn.hutool.core.io.FileUtil;
-import com.buffkit.common.core.utils.StringUtils;
+import com.hg.inventory.common.utils.StringUtils;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

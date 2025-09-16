@@ -24,14 +24,14 @@ public class FileServerConfig
     /** 上传路径 */
     private String uploadPath;
     /** 上传文件url前缀 */
-    private String urlPrefix;
+    private String fileUrlPrefix;
 
     /**
      * 获取完整的请求路径，包括：域名，端口，上下文访问路径
      * 
      * @return 服务地址
      */
-    public String getUrl()
+    public String getDomain()
     {
         HttpServletRequest request = ServletUtils.getRequest();
         return getDomain(request);

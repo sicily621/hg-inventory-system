@@ -8,6 +8,10 @@ import java.util.HashMap;
  * 操作消息提醒
  */
 public class MapResult extends HashMap<String, Object> {
+
+    private static final int SUCCESS = 200;
+    private static final int FAIL = 500;
+
     /**
      * 状态码
      */
@@ -90,7 +94,7 @@ public class MapResult extends HashMap<String, Object> {
      * @return 成功消息
      */
     public static MapResult success(String msg, Object data) {
-        return new MapResult(HttpStatus.SUCCESS, msg, data);
+        return new MapResult(SUCCESS, msg, data);
     }
 
     /**
@@ -120,7 +124,7 @@ public class MapResult extends HashMap<String, Object> {
      * @return 警告消息
      */
     public static MapResult error(String msg, Object data) {
-        return new MapResult(HttpStatus.ERROR, msg, data);
+        return new MapResult(FAIL, msg, data);
     }
 
     /**

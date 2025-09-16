@@ -43,7 +43,7 @@ public class FileController {
             // 上传并返回新文件名称
             String fileName = FileUploadUtils.upload(filePath, file);
             // String url = serverConfig.getUrl() + fileName;
-            String url = serverConfig.getUrl() + serverConfig.getUrlPrefix() + fileName;
+            String url = serverConfig.getDomain() + serverConfig.getFileUrlPrefix() + fileName;
             MapResult ajax = MapResult.success();
             ajax.put("url", url);
             ajax.put("fileName", fileName);
@@ -62,7 +62,7 @@ public class FileController {
     public MapResult uploadFiles(List<MultipartFile> files) throws Exception {
         try {
             // 上传文件路径
-            String filePath = myProjectConfig.getUploadPath();
+            String filePath = serverConfig.getUploadPath();
             List<String> urls = new ArrayList<String>();
             List<String> fileNames = new ArrayList<String>();
             List<String> newFileNames = new ArrayList<String>();
@@ -70,7 +70,7 @@ public class FileController {
             for (MultipartFile file : files) {
                 // 上传并返回新文件名称
                 String fileName = FileUploadUtils.upload(filePath, file);
-                String url = serverConfig.getUrl() + fileName;
+                String url = serverConfig.getDomain() + serverConfig.getFileUrlPrefix() + fileName;
                 urls.add(url);
                 fileNames.add(fileName);
                 newFileNames.add(FileUtils.getName(fileName));
