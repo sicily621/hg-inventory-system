@@ -1,5 +1,5 @@
 # 项目相关配置
-my-project:
+myproject:
   # 名称
   name: inventory-system
 

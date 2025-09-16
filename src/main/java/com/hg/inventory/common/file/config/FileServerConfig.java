@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  * @author zm
  */
 @Component
-@ConfigurationProperties(prefix = "my-project")
+@ConfigurationProperties(prefix = "myproject")
 @Data
 public class FileServerConfig
 {
