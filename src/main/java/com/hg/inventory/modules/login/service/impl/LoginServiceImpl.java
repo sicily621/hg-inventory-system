@@ -30,6 +30,7 @@ public class LoginServiceImpl implements LoginService {
                 loginResponse.setDepartmentId(employee.getDepartmentId());
                 loginResponse.setUsername(employee.getUsername());
                 loginResponse.setToken(StpUtil.getTokenValue());
+                loginResponse.setTokenTimeout(StpUtil.getTokenTimeout());
                 loginResponse.setMsg("登录成功");
             }else{
                 loginResponse.setMsg("密码错误");
