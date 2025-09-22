@@ -119,7 +119,7 @@ springdoc:
     # 标题
     title: '标题：${myproject.name}管理系统_接口文档'
     # 描述
-    description: '描述：用于宠物店管理'
+    description: '描述：用于慧谷商贸进销存管理'
     # 版本
     version: '版本号: ${myproject.version}'
     # 作者信息

@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 public class Account  extends BaseEntity {
     private Long id;
     private Long orderId;
+    private String relatedCode;
     private Integer type;
     private Integer relatedEntityType;
     private Long relatedEntityId;
