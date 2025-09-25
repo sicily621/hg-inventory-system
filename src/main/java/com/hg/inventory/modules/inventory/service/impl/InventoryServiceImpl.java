@@ -189,16 +189,16 @@ public class InventoryServiceImpl implements InventoryService {
 
             // 查询是否存在匹配记录
             Inventory existingInventory = inventoryMapper.selectOne(queryWrapper);
-            BigDecimal incomingQty = inventory.getQuantity() != null ? inventory.getQuantity() : BigDecimal.ZERO;
+//            BigDecimal incomingQty = inventory.getQuantity() != null ? inventory.getQuantity() : BigDecimal.ZERO;
 
             if (existingInventory != null) {
-                // 存在匹配记录，累加数量
-                BigDecimal existingQty = existingInventory.getQuantity() != null ? existingInventory.getQuantity() : BigDecimal.ZERO;
-                BigDecimal newQuantity = existingQty.subtract(incomingQty); // 累加操作
-                existingInventory.setQuantity(newQuantity);
+//                // 存在匹配记录，累加数量
+//                BigDecimal existingQty = existingInventory.getQuantity() != null ? existingInventory.getQuantity() : BigDecimal.ZERO;
+//                BigDecimal newQuantity = existingQty.subtract(incomingQty); // 累加操作
+//                existingInventory.setQuantity(newQuantity);
 
                 // 更新并添加到结果列表
-                inventoryMapper.updateById(existingInventory);
+                inventoryMapper.updateById(inventory);
                 resultList.add(existingInventory);
             } else {
                 // 不存在匹配记录，新增
