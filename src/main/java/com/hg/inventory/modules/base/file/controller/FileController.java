@@ -8,8 +8,10 @@ import com.hg.inventory.common.utils.file.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,8 +37,9 @@ public class FileController {
     /**
      * 通用上传请求（单个）
      */
-    @PostMapping("/upload")
-    public MapResult uploadFile(MultipartFile file) throws Exception {
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public MapResult upload(@RequestPart("file") MultipartFile file) {
+//    public MapResult uploadFile(MultipartFile file) throws Exception {
         try {
             // 上传文件路径
             String filePath = serverConfig.getUploadPath();
@@ -46,7 +49,7 @@ public class FileController {
             String url = serverConfig.getDomain() + serverConfig.getFileUrlPrefix() + fileName;
             MapResult ajax = MapResult.success();
             ajax.put("url", url);
-            ajax.put("fileName", fileName);
+            ajax.put("fileName",  serverConfig.getFileUrlPrefix() + fileName);
             ajax.put("newFileName", FileUtils.getName(fileName));
             ajax.put("originalFilename", file.getOriginalFilename());
             return ajax;
