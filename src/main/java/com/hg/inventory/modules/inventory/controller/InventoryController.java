@@ -71,6 +71,13 @@ public class InventoryController {
     public Result<List<Inventory>> getById(@PathVariable("ids") List<Long> ids){
         return Result.success(inventoryService.getByIds(ids));
     }
+    /**
+     * 根据商品Ids查询库存列表
+     */
+    @GetMapping("/getByProductIds/{ids}")
+    public Result<List<Inventory>> getByProductId(@PathVariable("ids") List<Long> ids){
+        return Result.success(inventoryService.getByProductIds(ids));
+    }
 
     /**
      * 删除库存

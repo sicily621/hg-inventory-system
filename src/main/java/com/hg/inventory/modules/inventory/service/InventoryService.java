@@ -25,4 +25,6 @@ public interface InventoryService {
     List<Inventory> shipment(List<Inventory> inventoryList);
 
     List<Inventory> batchUpdate(List<Inventory> inventoryList);
+
+    List<Inventory> getByProductIds(List<Long> ids);
 }

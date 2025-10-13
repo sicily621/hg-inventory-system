@@ -20,4 +20,6 @@ public interface ProductService {
     List<Product> list(ProductForm productForm);
 
     PageInfo<Product> page(ProductForm productForm, PageQuery pageQuery);
+
+    List<Product> batchSave(List<Product> products);
 }

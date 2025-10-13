@@ -1,5 +1,6 @@
 package com.hg.inventory.modules.base.product.service.impl;
 
+import cn.hutool.core.collection.CollStreamUtil;
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -74,6 +75,14 @@ public class ProductServiceImpl implements ProductService {
         Page<Product> result = productMapper.selectPage(page, lqw);
         PageInfo<Product> tableDataInfo = PageInfo.build(result);
         return tableDataInfo;
+    }
+
+    @Override
+    public List<Product> batchSave(List<Product> products) {
+        productMapper.insertOrUpdateBatch(products);
+        List<Long> list = CollStreamUtil.toList(products,Product::getId);
+        List<Product> result = getByIds(list);
+        return result;
     }
 
     private LambdaQueryWrapper<Product> getQueryWrapper(ProductForm productForm) {

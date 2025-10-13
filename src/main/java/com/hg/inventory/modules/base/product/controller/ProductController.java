@@ -42,6 +42,15 @@ public class ProductController {
         return Result.success(productService.save(product));
     }
     /**
+     * 批量修改商品
+     * @param products
+     * @return
+     */
+    @PutMapping("batchUpdate")
+    public Result<List<Product>> batchUpdate(@RequestBody List<Product> products){
+        return Result.success(productService.batchSave(products));
+    }
+    /**
      * 根据商品Id查询商品
      */
     @GetMapping("{id}")

@@ -210,6 +210,14 @@ public class InventoryServiceImpl implements InventoryService {
         return resultList; // 返回完整处理结果列表
     }
 
+    @Override
+    public List<Inventory> getByProductIds(List<Long> ids) {
+        LambdaQueryWrapper<Inventory> lqw = Wrappers.lambdaQuery();
+        lqw.eq(Inventory::getDelFlag, DelFlagEnum.NORMAL.getValue());
+        lqw.in( Inventory::getProductId, ids);
+        return inventoryMapper.selectList(lqw);
+    }
+
     private LambdaQueryWrapper<Inventory> getQueryWrapper(InventoryForm inventoryForm) {
         LambdaQueryWrapper<Inventory> lqw = Wrappers.lambdaQuery();
         lqw.eq(inventoryForm.getProductId()!=null, Inventory::getProductId, inventoryForm.getProductId());
