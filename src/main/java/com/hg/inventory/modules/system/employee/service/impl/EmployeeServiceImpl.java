@@ -1,5 +1,7 @@
 package com.hg.inventory.modules.system.employee.service.impl;
 
+import cn.dev33.satoken.secure.BCrypt;
+import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -23,6 +25,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee save(Employee employee) {
         int flag = 0;
         if(employee.getId()==null){
+            String password = employee.getPassword();
+            String newPassword = BCrypt.hashpw(password);
+            employee.setPassword(newPassword);
             flag= employeeMapper.insert(employee);
         }else{
             flag = employeeMapper.updateById(employee);
