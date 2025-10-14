@@ -15,5 +15,6 @@ public class SalesOrderDetail extends BaseEntity {
     private Long productId;
     private BigDecimal quantity;
     private BigDecimal price;
+    private BigDecimal cost;
     private BigDecimal amount;
 }

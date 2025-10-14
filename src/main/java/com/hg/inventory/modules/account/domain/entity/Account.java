@@ -16,6 +16,7 @@ public class Account  extends BaseEntity {
     private Integer relatedEntityType;
     private Long relatedEntityId;
     private BigDecimal amount;
+    private BigDecimal cost;
     private Integer paymentMethod;
     private String bankName;
     private Long employeeId;

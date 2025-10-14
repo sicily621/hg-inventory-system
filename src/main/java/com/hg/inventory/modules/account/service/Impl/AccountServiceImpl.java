@@ -10,6 +10,7 @@ import com.hg.inventory.modules.account.domain.entity.Account;
 import com.hg.inventory.modules.account.domain.form.AccountForm;
 import com.hg.inventory.modules.account.mapper.AccountMapper;
 import com.hg.inventory.modules.account.service.AccountService;
+import com.hg.inventory.modules.purchase.domain.entity.PurchaseDemand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -63,12 +64,15 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public PageInfo<Account> page(AccountForm accountForm) {
         LambdaQueryWrapper<Account> lqw = Wrappers.lambdaQuery();
+        lqw.ge(accountForm.getStartTime()!=null, Account::getCreateTime, accountForm.getStartTime());
+        lqw.le(accountForm.getEndTime()!=null, Account::getCreateTime, accountForm.getEndTime());
         lqw.eq(accountForm.getOrderId()!=null, Account::getOrderId, accountForm.getOrderId());
         lqw.eq(accountForm.getType()!=null, Account::getType, accountForm.getType());
         lqw.eq(accountForm.getEmployeeId()!=null, Account::getEmployeeId, accountForm.getEmployeeId());
         lqw.eq(accountForm.getStatus()!=null, Account::getStatus, accountForm.getStatus());
         lqw.eq(accountForm.getRelatedEntityId()!=null, Account::getRelatedEntityId, accountForm.getRelatedEntityId());
         lqw.eq( Account::getDelFlag, DelFlagEnum.NORMAL.getValue());
+        lqw.orderByDesc( Account::getId);
         Page<Account> page = accountForm.build();
         Page<Account> result = accountMapper.selectPage(page, lqw);
         PageInfo<Account> tableDataInfo = PageInfo.build(result);
