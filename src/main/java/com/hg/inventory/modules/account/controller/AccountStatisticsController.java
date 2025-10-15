@@ -23,16 +23,16 @@ public class AccountStatisticsController {
     /**
      * 查询单个时间类型统计
      */
-    @GetMapping("/getStatisticsByTimeType")
-    public Result<AccountStatisticsItem> statisticsByTimeType(AccountStatisticsForm statisticsForm){
-        return Result.success(accountStatisticsService.statisticsByTimeType(statisticsForm));
+    @GetMapping("/getSalesStatisticsByTimeType")
+    public Result<AccountStatisticsItem> getSalesStatisticsByTimeType(AccountStatisticsForm statisticsForm){
+        return Result.success(accountStatisticsService.getSalesStatisticsByTimeType(statisticsForm));
     }
 
     /**
      * 查询多个时间类型统计
      */
-    @GetMapping("/listStatisticsByTimeType")
-    public Result<List<AccountStatisticsItem>> listStatisticsByTimeType(AccountStatisticsForm statisticsForm){
-        return Result.success(accountStatisticsService.listStatisticsByTimeType(statisticsForm));
+    @GetMapping("/listSalesStatisticsByTimeType")
+    public Result<List<AccountStatisticsItem>> listSalesStatisticsByTimeType(AccountStatisticsForm statisticsForm){
+        return Result.success(accountStatisticsService.listSalesStatisticsByTimeType(statisticsForm));
     }
 }
