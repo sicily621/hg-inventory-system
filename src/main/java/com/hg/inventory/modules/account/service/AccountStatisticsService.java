@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface AccountStatisticsService {
 
-    AccountStatisticsItem statisticsByTimeType(AccountStatisticsForm statisticsForm);
+    AccountStatisticsItem getSalesStatisticsByTimeType(AccountStatisticsForm statisticsForm);
 
-    List<AccountStatisticsItem> listStatisticsByTimeType(AccountStatisticsForm statisticsForm);
+    List<AccountStatisticsItem> listSalesStatisticsByTimeType(AccountStatisticsForm statisticsForm);
 }

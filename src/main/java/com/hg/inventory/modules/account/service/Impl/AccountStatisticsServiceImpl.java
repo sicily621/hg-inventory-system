@@ -39,7 +39,7 @@ public class AccountStatisticsServiceImpl implements AccountStatisticsService {
     private AccountMapper accountMapper;
 
     @Override
-    public AccountStatisticsItem statisticsByTimeType(AccountStatisticsForm statisticsForm) {
+    public AccountStatisticsItem getSalesStatisticsByTimeType(AccountStatisticsForm statisticsForm) {
         Integer timeType = statisticsForm.getTimeType();
         Date startTime = statisticsForm.getStartTime();
 
@@ -108,7 +108,7 @@ public class AccountStatisticsServiceImpl implements AccountStatisticsService {
     }
 
     @Override
-    public List<AccountStatisticsItem> listStatisticsByTimeType(AccountStatisticsForm statisticsForm) {
+    public List<AccountStatisticsItem> listSalesStatisticsByTimeType(AccountStatisticsForm statisticsForm) {
         Integer timeType = statisticsForm.getTimeType();
         Date startTime = statisticsForm.getStartTime();
 
