@@ -9,6 +9,7 @@ import java.util.Date;
 @Data
 public class PurchaseReturnForm {
     private String code;
+    private Long orderId;
     private Long employeeId;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date startTime;

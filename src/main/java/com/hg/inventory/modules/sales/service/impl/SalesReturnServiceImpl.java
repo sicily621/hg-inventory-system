@@ -60,12 +60,14 @@ public class SalesReturnServiceImpl implements SalesReturnService {
         LambdaQueryWrapper<SalesReturn> lqw = Wrappers.lambdaQuery();
         lqw.eq(salesReturnForm.getStatus()!=null, SalesReturn::getStatus, salesReturnForm.getStatus());
         lqw.like(salesReturnForm.getCode()!=null, SalesReturn::getCode, salesReturnForm.getCode());
+        lqw.eq(salesReturnForm.getOrderId()!=null, SalesReturn::getOrderId, salesReturnForm.getOrderId());
         lqw.eq(salesReturnForm.getEmployeeId()!=null, SalesReturn::getEmployeeId, salesReturnForm.getEmployeeId());
         lqw.ge(salesReturnForm.getStartTime()!=null, SalesReturn::getCreateTime, salesReturnForm.getStartTime());
         lqw.le(salesReturnForm.getEndTime()!=null, SalesReturn::getCreateTime, salesReturnForm.getEndTime());
         lqw.ge(salesReturnForm.getStartStatus()!=null, SalesReturn::getStatus, salesReturnForm.getStartStatus());
         lqw.le(salesReturnForm.getEndStatus() !=null, SalesReturn::getStatus, salesReturnForm.getEndStatus());
         lqw.eq(SalesReturn::getDelFlag, DelFlagEnum.NORMAL.getValue());
+        lqw.orderByDesc(SalesReturn::getId);
         return lqw;
     }
 

@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hg.inventory.common.domain.form.PageQuery;
 import com.hg.inventory.common.domain.vo.PageInfo;
 import com.hg.inventory.common.enums.DelFlagEnum;
+import com.hg.inventory.modules.purchase.domain.entity.PurchaseDemand;
 import com.hg.inventory.modules.sales.domain.entity.SalesOrder;
 import com.hg.inventory.modules.sales.domain.form.SalesOrderForm;
 import com.hg.inventory.modules.sales.mapper.SalesOrderMapper;
@@ -64,6 +65,7 @@ public class SalesOrderServiceImpl implements SalesOrderService {
         lqw.ge(salesOrderForm.getStartStatus()!=null, SalesOrder::getStatus, salesOrderForm.getStartStatus());
         lqw.le(salesOrderForm.getEndStatus() !=null, SalesOrder::getStatus, salesOrderForm.getEndStatus());
         lqw.eq(SalesOrder::getDelFlag, DelFlagEnum.NORMAL.getValue());
+        lqw.orderByDesc(SalesOrder::getId);
         return lqw;
     }
 

@@ -60,6 +60,7 @@ public class PurchaseReturnServiceImpl implements PurchaseReturnService {
         LambdaQueryWrapper<PurchaseReturn> lqw = Wrappers.lambdaQuery();
         lqw.eq(purchaseReturnForm.getStatus()!=null, PurchaseReturn::getStatus, purchaseReturnForm.getStatus());
         lqw.like(purchaseReturnForm.getCode()!=null, PurchaseReturn::getCode, purchaseReturnForm.getCode());
+        lqw.eq(purchaseReturnForm.getOrderId()!=null, PurchaseReturn::getOrderId, purchaseReturnForm.getOrderId());
         lqw.eq(purchaseReturnForm.getEmployeeId()!=null, PurchaseReturn::getEmployeeId, purchaseReturnForm.getEmployeeId());
         lqw.ge(purchaseReturnForm.getStartTime()!=null, PurchaseReturn::getCreateTime, purchaseReturnForm.getStartTime());
         lqw.le(purchaseReturnForm.getEndTime()!=null, PurchaseReturn::getCreateTime, purchaseReturnForm.getEndTime());
@@ -67,6 +68,7 @@ public class PurchaseReturnServiceImpl implements PurchaseReturnService {
         lqw.le(purchaseReturnForm.getEndStatus()!=null, PurchaseReturn::getStatus, purchaseReturnForm.getEndStatus());
         lqw.eq(purchaseReturnForm.getReceipt()!=null, PurchaseReturn::getReceipt, purchaseReturnForm.getReceipt());
         lqw.eq(PurchaseReturn::getDelFlag, DelFlagEnum.NORMAL.getValue());
+        lqw.orderByDesc(PurchaseReturn::getId);
         return lqw;
     }
 

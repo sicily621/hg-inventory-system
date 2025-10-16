@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hg.inventory.common.domain.form.PageQuery;
 import com.hg.inventory.common.domain.vo.PageInfo;
 import com.hg.inventory.common.enums.DelFlagEnum;
+import com.hg.inventory.modules.account.domain.entity.Account;
 import com.hg.inventory.modules.purchase.domain.entity.PurchaseOrder;
 import com.hg.inventory.modules.purchase.domain.form.PurchaseOrderForm;
 import com.hg.inventory.modules.purchase.mapper.PurchaseOrderMapper;
@@ -65,6 +66,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         lqw.ge(purchaseOrderForm.getStartStatus()!=null, PurchaseOrder::getStatus, purchaseOrderForm.getStartStatus());
         lqw.le(purchaseOrderForm.getEndStatus()!=null, PurchaseOrder::getStatus, purchaseOrderForm.getEndStatus());
         lqw.eq(PurchaseOrder::getDelFlag, DelFlagEnum.NORMAL.getValue());
+        lqw.orderByDesc(PurchaseOrder::getId);
         return lqw;
     }
 

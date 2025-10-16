@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hg.inventory.common.domain.vo.PageInfo;
 import com.hg.inventory.common.enums.DelFlagEnum;
 import com.hg.inventory.modules.purchase.domain.entity.PurchaseDemand;
+import com.hg.inventory.modules.purchase.domain.entity.PurchaseReturn;
 import com.hg.inventory.modules.purchase.domain.form.PurchaseDemandForm;
 import com.hg.inventory.modules.purchase.mapper.PurchaseDemandMapper;
 import com.hg.inventory.modules.purchase.service.PurchaseDemandService;
@@ -56,6 +57,7 @@ public class PurchaseDemandServiceImpl implements PurchaseDemandService {
         Page<PurchaseDemand> page = purchaseDemandForm.build();
         Page<PurchaseDemand> result = purchaseDemandMapper.selectPage(page, lqw);
         PageInfo<PurchaseDemand> tableDataInfo = PageInfo.build(result);
+        lqw.orderByDesc(PurchaseDemand::getId);
         return tableDataInfo;
     }
 
