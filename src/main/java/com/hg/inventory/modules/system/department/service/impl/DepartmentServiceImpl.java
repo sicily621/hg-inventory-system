@@ -1,12 +1,16 @@
 package com.hg.inventory.modules.system.department.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.hg.inventory.common.enums.DelFlagEnum;
+import com.hg.inventory.common.exception.ServiceException;
 import com.hg.inventory.modules.system.department.domain.entity.Department;
 import com.hg.inventory.modules.system.department.mapper.DepartmentMapper;
 import com.hg.inventory.modules.system.department.service.DepartmentService;
 import com.hg.inventory.modules.system.employee.domain.entity.Employee;
+import com.hg.inventory.modules.system.employee.domain.form.EmployeeForm;
+import com.hg.inventory.modules.system.employee.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +20,8 @@ import java.util.List;
 public class DepartmentServiceImpl implements DepartmentService {
     @Autowired
     private DepartmentMapper departmentMapper;
+    @Autowired
+    private EmployeeService employeeService;
     @Override
     public Department save(Department department) {
         int flag = 0;
@@ -39,6 +45,12 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public boolean deleteById(Long id) {
+        EmployeeForm employeeForm = new EmployeeForm();
+        employeeForm.setDepartmentId(id);
+        List<Employee> employeeList = employeeService.list(employeeForm);
+        if(CollUtil.isNotEmpty(employeeList)){
+            throw new ServiceException("该部门存在员工，无法删除");
+        }
         departmentMapper.deleteById(id);
         return true;
     }

@@ -1,14 +1,18 @@
 package com.hg.inventory.modules.system.permission.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hg.inventory.common.domain.vo.PageInfo;
 import com.hg.inventory.common.enums.DelFlagEnum;
+import com.hg.inventory.common.exception.ServiceException;
 import com.hg.inventory.modules.system.permission.domain.entity.Permission;
 import com.hg.inventory.modules.system.permission.domain.form.PermissionForm;
 import com.hg.inventory.modules.system.permission.mapper.PermissionMapper;
 import com.hg.inventory.modules.system.permission.service.PermissionService;
+import com.hg.inventory.modules.system.rolepermission.domain.entity.RolePermission;
+import com.hg.inventory.modules.system.rolepermission.service.RolePermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +22,8 @@ import java.util.List;
 public class PermissionServiceImpl implements PermissionService {
     @Autowired
     private PermissionMapper permissionMapper;
+    @Autowired
+    private RolePermissionService rolePermissionService;
     @Override
     public Permission save(Permission permission) {
         int flag = 0;
@@ -41,6 +47,10 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public Boolean deleteById(Long id) {
+        List<RolePermission> rolePermissions = rolePermissionService.getByPermissionId(id);
+        if(CollUtil.isNotEmpty(rolePermissions)){
+            throw new ServiceException("存在关联角色，无法删除");
+        }
         permissionMapper.deleteById(id);
         return true;
     }

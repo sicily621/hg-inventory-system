@@ -1,14 +1,19 @@
 package com.hg.inventory.modules.base.warehouse.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hg.inventory.common.domain.form.PageQuery;
 import com.hg.inventory.common.domain.vo.PageInfo;
 import com.hg.inventory.common.enums.DelFlagEnum;
+import com.hg.inventory.common.exception.ServiceException;
+import com.hg.inventory.modules.base.warehouse.domain.entity.Shelf;
 import com.hg.inventory.modules.base.warehouse.domain.entity.WarehouseArea;
+import com.hg.inventory.modules.base.warehouse.domain.form.ShelfForm;
 import com.hg.inventory.modules.base.warehouse.domain.form.WarehouseAreaForm;
 import com.hg.inventory.modules.base.warehouse.mapper.WarehouseAreaMapper;
+import com.hg.inventory.modules.base.warehouse.service.ShelfService;
 import com.hg.inventory.modules.base.warehouse.service.WarehouseAreaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +24,9 @@ import java.util.List;
 public class WarehouseAreaServiceImpl implements WarehouseAreaService {
     @Autowired
     private WarehouseAreaMapper warehouseAreaMapper;
+    @Autowired
+    private ShelfService shelfService;
+
     @Override
     public WarehouseArea save(WarehouseArea warehouseArea) {
         int flag = 0;
@@ -49,6 +57,12 @@ public class WarehouseAreaServiceImpl implements WarehouseAreaService {
 
     @Override
     public Boolean deleteById(Long id) {
+        ShelfForm shelfForm = new ShelfForm();
+        shelfForm.setAreaId(id);
+        List<Shelf> shelfList = shelfService.list(shelfForm);
+        if(CollUtil.isNotEmpty(shelfList)){
+            throw new ServiceException("存在关联货架，无法删除");
+        }
         warehouseAreaMapper.deleteById(id);
         return true;
     }

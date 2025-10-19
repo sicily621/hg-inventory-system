@@ -1,14 +1,20 @@
 package com.hg.inventory.modules.system.role.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hg.inventory.common.domain.vo.PageInfo;
 import com.hg.inventory.common.enums.DelFlagEnum;
+import com.hg.inventory.common.exception.ServiceException;
+import com.hg.inventory.modules.system.employee.domain.entity.Employee;
+import com.hg.inventory.modules.system.employee.domain.form.EmployeeForm;
+import com.hg.inventory.modules.system.employee.service.EmployeeService;
 import com.hg.inventory.modules.system.role.domain.entity.Role;
 import com.hg.inventory.modules.system.role.domain.form.RoleForm;
 import com.hg.inventory.modules.system.role.mapper.RoleMapper;
 import com.hg.inventory.modules.system.role.service.RoleService;
+import com.hg.inventory.modules.system.rolepermission.service.RolePermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +24,10 @@ import java.util.List;
 public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleMapper roleMapper;
+    @Autowired
+    private RolePermissionService rolePermissionService;
+    @Autowired
+    private EmployeeService employeeService;
     @Override
     public Role save(Role role) {
         int flag = 0;
@@ -41,7 +51,14 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Boolean deleteById(Long id) {
+        EmployeeForm employeeForm = new EmployeeForm();
+        employeeForm.setRoleId(id);
+        List<Employee> employeeList = employeeService.list(employeeForm);
+        if(CollUtil.isNotEmpty(employeeList)){
+            throw new ServiceException("存在关联的员工，不能删除");
+        }
         roleMapper.deleteById(id);
+        rolePermissionService.deleteByRoleId(id);
         return true;
     }
 

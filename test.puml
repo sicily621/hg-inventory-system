@@ -1,27 +1,60 @@
 @startuml
-'https://plantuml.com/class-diagram
+' 设置样式：模仿标准ER图
+skinparam defaultTextAlignment center
+skinparam EntityBackgroundColor White
+skinparam EntityBorderColor Black
+skinparam EntityAttributeIconSize 0
+skinparam ArrowFontSize 10
+skinparam ArrowColor Black
 
-abstract class AbstractList
-abstract AbstractCollection
-interface List
-interface Collection
-
-List <|-- AbstractList
-Collection <|-- AbstractCollection
-
-Collection <|- List
-AbstractCollection <|- AbstractList
-AbstractList <|-- ArrayList
-
-class ArrayList {
-Object[] elementData
-size()
+entity "部门表 (hg_department)" as Department {
+    id : bigint «PK»
+    parent_id : bigint «FK»
+    name : varchar(50) «NOT NULL»
+    manager_id : bigint «FK»
+    create_time : datetime
+    update_time : datetime
+    del_flag : int
 }
 
-enum TimeUnit {
-DAYS
-HOURS
-MINUTES
+entity "员工表 (hg_employee)" as Employee {
+    id : bigint «PK»
+    code : varchar(50) «NOT NULL»
+    username : varchar(50) «NOT NULL»
+    password : varchar(100) «NOT NULL»
+    real_name : varchar(50) «NOT NULL»
+    department_id : bigint «FK»
+    position : varchar(50)
+    phone : varchar(50)
+    role_id : bigint «FK»
+    status : int
+    create_time : datetime
+    update_time : datetime
+    del_flag : int
 }
+
+entity "角色表 (hg_role)" as Role {
+    id : bigint «PK»
+    name : varchar(50) «NOT NULL»
+    description : varchar(255)
+    create_time : datetime
+    update_time : datetime
+    del_flag : int
+}
+
+entity "权限表 (hg_permission)" as Permission {
+    id : bigint «PK»
+    name : varchar(50) «NOT NULL»
+    description : varchar(255)
+    create_time : datetime
+    update_time : datetime
+    del_flag : int
+}
+
+' ================== 关系定义（单线 + 基数直接在关系线上） ==================
+
+Department ||--o{ Employee : "1所属N"
+Employee }o--|| Role : "   拥有"
+Role ||--o{ Permission : "1包含N"
 
 @enduml

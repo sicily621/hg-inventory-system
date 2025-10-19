@@ -1,14 +1,19 @@
 package com.hg.inventory.modules.base.supplier.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hg.inventory.common.domain.vo.PageInfo;
 import com.hg.inventory.common.enums.DelFlagEnum;
+import com.hg.inventory.common.exception.ServiceException;
 import com.hg.inventory.modules.base.supplier.domain.entity.Supplier;
 import com.hg.inventory.modules.base.supplier.domain.form.SupplierForm;
 import com.hg.inventory.modules.base.supplier.mapper.SupplierMapper;
 import com.hg.inventory.modules.base.supplier.service.SupplierService;
+import com.hg.inventory.modules.purchase.domain.entity.PurchaseOrderDetail;
+import com.hg.inventory.modules.purchase.domain.form.PurchaseOrderDetailForm;
+import com.hg.inventory.modules.purchase.service.PurchaseOrderDetailService;
 import com.hg.inventory.modules.system.role.domain.entity.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +24,8 @@ import java.util.List;
 public class SupplierServiceImpl implements SupplierService {
     @Autowired
     private SupplierMapper supplierMapper;
+    @Autowired
+    private PurchaseOrderDetailService purchaseOrderDetailService;
     @Override
     public Supplier save(Supplier supplier) {
         int flag = 0;
@@ -49,6 +56,12 @@ public class SupplierServiceImpl implements SupplierService {
 
     @Override
     public Boolean deleteById(Long id) {
+        PurchaseOrderDetailForm purchaseOrderDetailForm = new PurchaseOrderDetailForm();
+        purchaseOrderDetailForm.setSupplierId(id);
+        List<PurchaseOrderDetail> purchaseOrderDetails = purchaseOrderDetailService.list(purchaseOrderDetailForm);
+        if(CollUtil.isNotEmpty(purchaseOrderDetails)){
+            throw new ServiceException("存在关联采购订单，无法删除");
+        }
         supplierMapper.deleteById(id);
         return true;
     }

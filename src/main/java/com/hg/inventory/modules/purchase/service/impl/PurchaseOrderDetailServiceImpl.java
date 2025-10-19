@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.hg.inventory.common.enums.DelFlagEnum;
 import com.hg.inventory.modules.purchase.domain.entity.PurchaseDemandDetail;
 import com.hg.inventory.modules.purchase.domain.entity.PurchaseOrderDetail;
+import com.hg.inventory.modules.purchase.domain.form.PurchaseOrderDetailForm;
 import com.hg.inventory.modules.purchase.mapper.PurchaseOrderDetailMapper;
 import com.hg.inventory.modules.purchase.service.PurchaseOrderDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +37,21 @@ public class PurchaseOrderDetailServiceImpl implements PurchaseOrderDetailServic
         lqw.eq(PurchaseOrderDetail::getDelFlag, DelFlagEnum.NORMAL.getValue());
         lqw.eq(PurchaseOrderDetail::getOrderId, orderId);
         purchaseOrderDetailMapper.delete(lqw);
+    }
+
+    @Override
+    public List<PurchaseOrderDetail> list(PurchaseOrderDetailForm form) {
+        Long orderId = form.getOrderId();
+        Long supplierId = form.getSupplierId();
+        Long categoryId = form.getCategoryId();
+        Long productId = form.getProductId();
+        LambdaQueryWrapper<PurchaseOrderDetail> lqw = Wrappers.lambdaQuery();
+        lqw.eq(orderId!=null, PurchaseOrderDetail::getOrderId, orderId);
+        lqw.eq(supplierId!=null, PurchaseOrderDetail::getSupplierId, supplierId);
+        lqw.eq(categoryId!=null, PurchaseOrderDetail::getCategoryId, categoryId);
+        lqw.eq(productId!=null, PurchaseOrderDetail::getProductId, productId);
+        lqw.eq(PurchaseOrderDetail::getDelFlag, DelFlagEnum.NORMAL.getValue());
+        List<PurchaseOrderDetail> purchaseOrderDetails = purchaseOrderDetailMapper.selectList(lqw);
+        return purchaseOrderDetails;
     }
 }

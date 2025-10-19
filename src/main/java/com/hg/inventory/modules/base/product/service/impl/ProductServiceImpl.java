@@ -8,11 +8,18 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hg.inventory.common.domain.form.PageQuery;
 import com.hg.inventory.common.domain.vo.PageInfo;
 import com.hg.inventory.common.enums.DelFlagEnum;
+import com.hg.inventory.common.exception.ServiceException;
 import com.hg.inventory.modules.base.product.domain.entity.Product;
 import com.hg.inventory.modules.base.product.domain.form.ProductForm;
 import com.hg.inventory.modules.base.product.mapper.ProductMapper;
 import com.hg.inventory.modules.base.product.service.CategoryService;
 import com.hg.inventory.modules.base.product.service.ProductService;
+import com.hg.inventory.modules.purchase.domain.entity.PurchaseOrderDetail;
+import com.hg.inventory.modules.purchase.domain.form.PurchaseOrderDetailForm;
+import com.hg.inventory.modules.purchase.service.PurchaseOrderDetailService;
+import com.hg.inventory.modules.sales.domain.entity.SalesOrderDetail;
+import com.hg.inventory.modules.sales.domain.form.SalesOrderDetailForm;
+import com.hg.inventory.modules.sales.service.SalesOrderDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +32,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private PurchaseOrderDetailService purchaseOrderDetailService;
+    @Autowired
+    private SalesOrderDetailService salesOrderDetailService;
     @Override
     public Product save(Product product) {
         int flag = 0;
@@ -56,6 +67,18 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Boolean deleteById(Long id) {
+        PurchaseOrderDetailForm purchaseOrderDetailForm = new PurchaseOrderDetailForm();
+        purchaseOrderDetailForm.setProductId(id);
+        List<PurchaseOrderDetail> PurchaseOrderDetails = purchaseOrderDetailService.list(purchaseOrderDetailForm);
+        if(CollUtil.isNotEmpty(PurchaseOrderDetails)){
+            throw new ServiceException("存在关联的采购订单，无法删除");
+        }
+        SalesOrderDetailForm salesOrderDetailForm = new SalesOrderDetailForm();
+        salesOrderDetailForm.setProductId(id);
+        List<SalesOrderDetail> salesOrderDetailList = salesOrderDetailService.list(salesOrderDetailForm);
+        if(CollUtil.isNotEmpty(salesOrderDetailList)){
+            throw new ServiceException("存在关联的销售订单，无法删除");
+        }
         productMapper.deleteById(id);
         return true;
     }

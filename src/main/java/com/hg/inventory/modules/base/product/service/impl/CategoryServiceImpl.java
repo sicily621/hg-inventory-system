@@ -6,9 +6,13 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.google.common.collect.Lists;
 import com.hg.inventory.common.enums.DelFlagEnum;
+import com.hg.inventory.common.exception.ServiceException;
 import com.hg.inventory.modules.base.product.domain.entity.Category;
+import com.hg.inventory.modules.base.product.domain.entity.Product;
+import com.hg.inventory.modules.base.product.domain.form.ProductForm;
 import com.hg.inventory.modules.base.product.mapper.CategoryMapper;
 import com.hg.inventory.modules.base.product.service.CategoryService;
+import com.hg.inventory.modules.base.product.service.ProductService;
 import com.hg.inventory.modules.system.department.domain.entity.Department;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +25,8 @@ import java.util.Map;
 public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryMapper categoryMapper;
+    @Autowired
+    private ProductService productService;
     @Override
     public Category save(Category category) {
         int flag = 0;
@@ -52,6 +58,12 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Boolean deleteById(Long id) {
+        ProductForm productForm = new ProductForm();
+        productForm.setCategoryId(id);
+        List<Product> productList = productService.list(productForm);
+        if(CollUtil.isNotEmpty(productList)){
+            throw new ServiceException("存在关联商品，无法删除");
+        }
         categoryMapper.deleteById(id);
         return true;
     }

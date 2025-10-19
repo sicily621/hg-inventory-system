@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.hg.inventory.common.enums.DelFlagEnum;
 import com.hg.inventory.modules.sales.domain.entity.SalesOrderDetail;
+import com.hg.inventory.modules.sales.domain.form.SalesOrderDetailForm;
 import com.hg.inventory.modules.sales.mapper.SaleOrderDetailMapper;
 import com.hg.inventory.modules.sales.service.SalesOrderDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +36,14 @@ public class SalesOrderDetailServiceImpl implements SalesOrderDetailService {
         lqw.eq(SalesOrderDetail::getDelFlag, DelFlagEnum.NORMAL.getValue());
         lqw.eq(SalesOrderDetail::getOrderId, orderId);
         saleOrderDetailMapper.delete(lqw);
+    }
+
+    @Override
+    public List<SalesOrderDetail> list(SalesOrderDetailForm salesOrderDetailForm) {
+        Long productId = salesOrderDetailForm.getProductId();
+        LambdaQueryWrapper<SalesOrderDetail> lqw = Wrappers.lambdaQuery();
+        lqw.eq(SalesOrderDetail::getDelFlag, DelFlagEnum.NORMAL.getValue());
+        lqw.eq(productId!=null, SalesOrderDetail::getProductId, productId);
+        return saleOrderDetailMapper.selectList(lqw);
     }
 }

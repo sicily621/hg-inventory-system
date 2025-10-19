@@ -1,14 +1,19 @@
 package com.hg.inventory.modules.base.warehouse.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hg.inventory.common.domain.form.PageQuery;
 import com.hg.inventory.common.domain.vo.PageInfo;
 import com.hg.inventory.common.enums.DelFlagEnum;
+import com.hg.inventory.common.exception.ServiceException;
 import com.hg.inventory.modules.base.warehouse.domain.entity.Warehouse;
+import com.hg.inventory.modules.base.warehouse.domain.entity.WarehouseArea;
+import com.hg.inventory.modules.base.warehouse.domain.form.WarehouseAreaForm;
 import com.hg.inventory.modules.base.warehouse.domain.form.WarehouseForm;
 import com.hg.inventory.modules.base.warehouse.mapper.WarehouseMapper;
+import com.hg.inventory.modules.base.warehouse.service.WarehouseAreaService;
 import com.hg.inventory.modules.base.warehouse.service.WarehouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +24,8 @@ import java.util.List;
 public class WarehouseServiceImpl implements WarehouseService {
     @Autowired
     private WarehouseMapper warehouseMapper;
+    @Autowired
+    private WarehouseAreaService warehouseAreaService;
     @Override
     public Warehouse save(Warehouse warehouse) {
         int flag = 0;
@@ -49,6 +56,12 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     @Override
     public Boolean deleteById(Long id) {
+        WarehouseAreaForm warehouseAreaForm = new WarehouseAreaForm();
+        warehouseAreaForm.setWarehouseId(id);
+        List<WarehouseArea> warehouseAreaList = warehouseAreaService.list(warehouseAreaForm);
+        if(CollUtil.isNotEmpty(warehouseAreaList)){
+            throw new ServiceException("存在关联区域，无法删除");
+        }
         warehouseMapper.deleteById(id);
         return true;
     }
