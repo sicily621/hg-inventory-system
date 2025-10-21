@@ -54,10 +54,10 @@ public class PurchaseDemandServiceImpl implements PurchaseDemandService {
         lqw.eq(purchaseDemandForm.getApplicantId()!=null, PurchaseDemand::getApplicantId, purchaseDemandForm.getApplicantId());
         lqw.eq(purchaseDemandForm.getStatus()!=null, PurchaseDemand::getStatus, purchaseDemandForm.getStatus());
         lqw.eq(PurchaseDemand::getDelFlag, DelFlagEnum.NORMAL.getValue());
+        lqw.orderByDesc(PurchaseDemand::getId);
         Page<PurchaseDemand> page = purchaseDemandForm.build();
         Page<PurchaseDemand> result = purchaseDemandMapper.selectPage(page, lqw);
         PageInfo<PurchaseDemand> tableDataInfo = PageInfo.build(result);
-        lqw.orderByDesc(PurchaseDemand::getId);
         return tableDataInfo;
     }
 
